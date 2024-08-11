@@ -1,0 +1,26 @@
+default: &default
+  adapter: postgresql
+  encoding: unicode
+  # For details on connection pooling, see Rails configuration guide
+  # https://guides.rubyonrails.org/configuring.html#database-pooling
+  pool: <%= ENV.fetch("RAILS_MAX_THREADS") { 5 } %>
+
+development:
+  <<: *default
+  database:  <%= ENV["CEDIS2RMB_DB"] %>
+  username:  <%= ENV["CEDIS2RMB_DB_USERNAME"] %>
+  password:  <%= ENV["CEDIS2RMB_DB_PASSWORD"] %>
+
+  
+test:
+  <<: *default
+  database:  <%= ENV["CEDIS2RMB_DB_TEST"] %>
+  username:  <%= ENV["CEDIS2RMB_DB_USERNAME"] %>
+  password:  <%= ENV["CEDIS2RMB_DB_PASSWORD"] %>
+
+
+production:
+  <<: *default
+  database: cedis2rmb_portal_production
+  username: cedis2rmb_portal
+  password: <%= ENV["CEDIS2RMB_PORTAL_DATABASE_PASSWORD"] %>
