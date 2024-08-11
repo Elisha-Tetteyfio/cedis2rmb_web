@@ -18,6 +18,8 @@ module.exports = {
       'slate': '#fafbff',
       'white': '#ffffff',
       'blue': '#4f71fa',
+      'light-blue': '#edf0ff',
+      'dark-blue': '#04124d',
       'grey-dark': '#636363',
       'grey-light': '#d9d9d9'
     }
