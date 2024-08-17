@@ -210,7 +210,9 @@
       <div class="w-[80%] mx-auto flex justify-between">
         <div class="md:flex md:items-center md:justify-between md:w-[100%] lg:block">
           <div class="flex items-center gap-x-2.5">
-            <div class="bg-white rounded-full w-[30px] h-[30px]"></div>
+            <div class="bg-white rounded-full w-[30px] h-[30px]">
+              <%= image_tag 'logo_white.svg', alt: 'logo', class: "w-full" %>
+            </div>
             <div class="">Cedis2RMB</div>
           </div>
           <div class="my-2">
@@ -220,7 +222,7 @@
             2024 Cedis2RMB. All rights reserved
           </div>
         </div>
-        <div class="hidden lg:block">
+        <div class="hidden lg:block lg:w-[80%]">
           <h6 class="font-semibold">Newsletter</h6>
           <div class="my-2">By clicking subscribe, you agree to our privacy policy</div>
           <div class="bg-white text-grey-dark font-bold rounded py-1 px-2 flex justify-between items-center">
