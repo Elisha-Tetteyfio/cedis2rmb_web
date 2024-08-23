@@ -1,0 +1,133 @@
+<div class="bg-blue-light p-2 min-h-screen">
+<!-- <div class="bg-blue-light p-6  flex justify-center items-center"> -->
+  <div class="w-[70%] max-w-4xl mx-auto my-4 p-4 rounded-xl bg-white shadow-lg">
+    <!-- Header Section -->
+    <div class="flex items-center gap-x-6 mb-6">
+      <div class=" bg-white px-2 text-bold rounded-lg w-fit h-fit border-4 border-grey-light hover:shadow-md transition-shadow">
+        <i class="bi-arrow-left text-2xl"></i>
+      </div>
+      <h1 class="font-bold text-3xl text-blue-dark">New order</h1>
+    </div>
+
+    <hr class="mb-8 border-grey-light">
+
+    <%#= link_to "Back to orders", orders_path, class: "ml-2 rounded-lg py-3 px-5 bg-gray-100 inline-block font-medium" %>
+
+    <div class="space-y-8 text-grey-dark">
+      <%= form_with(model: @order, class: "contents", id: "currencyform") do |form| %>
+        <div class="flex justify-between mb-8">
+          <!-- Currency conversion -->
+          <div>
+            <label class="block text-base font-semibold">Select Currency</label>
+            <div class="flex gap-x-8">
+              <label class="flex items-center space-x-1">
+                <%= radio_button_tag :currency, "cedi", true, class: "mr-2" %>
+                Cedis ₵
+              </label>
+              <label class="flex items-center space-x-1">
+                <%= radio_button_tag :currency, "rmb", false, class: "mr-2" %>
+                RMB ¥
+              </label>
+            </div>
+          </div>
+              
+          <!--Display rate -->
+          <div class="flex items-center space-x-2">
+            <span class="font-semibold">Rate:</span>
+            <p class="text-xl text-blue-dark font-bold bg-grey-light bg-opacity-30 text-center py-1 px-3 rounded-lg border border-grey-light">
+              <%= @exchange_rate %>
+            </p>
+          </div>          
+        </div>
+
+        <div class="flex gap-x-4 items-end justify-between">
+          <div class="flex-1">
+            <label class="block text-base font-semibold">Enter Amount</label>
+            <%= form.number_field :temp_amount, id: "temp_amount", value: "", placeholder: "Enter Amount", required: true, 
+              class: "w-full rounded-md border border-grey-light outline-none px-3 py-2 mt-2 h-[40px]" %>
+          </div>
+
+          <diV class="flex items-end gap-x-4">
+            <button type="button" id="convert-btn"
+              class="bg-blue-light text-blue-dark px-4 font-medium border border-blue-light rounded-md h-[40px]">
+              See RMB equivalent
+            </button>
+
+            <!-- Display the Conversion Result -->
+            <div class="flex items-center text-center py-1 px-3 h-[40px] bg-grey-light bg-opacity-30 rounded-md border border-grey-light">
+              <p id="result" class="font-semibold font-lg text-grey-dark">0.00</p>
+            </div>
+          </div>
+        </div>
+
+        <div>
+          <%= form.hidden_field :amount, id: "amount", class: "hidden" %>
+        </div>
+
+        <hr class="text-grey-light mt-8"/>
+
+        <div class="text-right">
+          <%= form.submit class: "bg-blue-dark text-white font-bold rounded-lg py-2 px-4 mt-8 cursor-pointer hover:bg-grey-dark hover:text-blue-dark transition" %>
+        </div>
+      <% end %>
+    </div>
+
+  </div>
+</div>
+
+
+<script>
+  document.addEventListener("DOMContentLoaded", function() {
+    const amountInput = document.getElementById("temp_amount");
+    const convertBtn = document.getElementById("convert-btn");
+    const result = document.getElementById("result");
+    const hiddenAmountField = document.getElementById("amount");
+    const currencyForm = document.getElementById('currencyform');
+    var exchangeRate = <%= @exchange_rate %>;
+
+    // Display converted amount
+    convertBtn.addEventListener("click", function() {
+      const selectedCurrency = document.querySelector('input[name="currency"]:checked').value;
+      const amount = parseFloat(amountInput.value);
+    
+      if (isNaN(amount)) {
+        result.textContent = "Invalid amount.";
+        return;
+      }
+
+      let convertedAmount;
+      if (selectedCurrency === "cedi") {
+        convertedAmount = (amount * exchangeRate).toFixed(2);
+        result.textContent = `¥ ${convertedAmount}`;
+      } else if (selectedCurrency === "rmb") {
+        convertedAmount = (amount / exchangeRate).toFixed(2);
+        result.textContent = `₵ ${convertedAmount}`;
+      }
+    });
+
+    //Update amount field
+    amountInput.addEventListener("change", function() {
+      const selectedCurrency = document.querySelector('input[name="currency"]:checked').value;
+      const amount = parseFloat(amountInput.value);
+    
+      if (isNaN(amount)) {
+        result.textContent = "0";
+        return;
+      }
+
+      let convertedAmount;
+      if (selectedCurrency === "cedi") {
+        hiddenAmountField.value = amount.toFixed(2); //Set amount
+      } else if (selectedCurrency === "rmb") {
+        hiddenAmountField.value = (amount / exchangeRate).toFixed(2); //Set amount
+      }
+    })
+    
+    currencyForm.addEventListener('change', function(event) {
+      if (event.target.name === 'currency') {
+        const convertButton = document.getElementById('convert-btn');
+        convertButton.textContent = event.target.value === 'cedi' ? "See RMB equivalent" : "See Cedis equivalent";
+      }
+    });
+  });
+</script>

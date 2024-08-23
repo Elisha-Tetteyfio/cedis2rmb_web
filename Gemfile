@@ -47,6 +47,8 @@ gem "bootsnap", require: false
 
 gem "figaro"
 
+gem 'will_paginate'
+
 # Use Sass to process CSS
 # gem "sassc-rails"
 
