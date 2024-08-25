@@ -9,7 +9,7 @@
       <h1 class="font-bold text-3xl text-blue-dark">New order</h1>
     </div>
 
-    <hr class="mb-8 border-grey-light">
+    <hr class="mb-8 border-grey-dark">
 
     <%#= link_to "Back to orders", orders_path, class: "ml-2 rounded-lg py-3 px-5 bg-gray-100 inline-block font-medium" %>
 
@@ -64,7 +64,35 @@
           <%= form.hidden_field :amount, id: "amount", class: "hidden" %>
         </div>
 
-        <hr class="text-grey-light mt-8"/>
+        <hr class="text-grey-dark my-8"/>
+
+        <!-- Recipient account -->
+        <div>
+          <h1 class="text-blue-dark text-3xl font-bold">Account details</h1>
+          <hr class="text-grey-light mb-8"/>
+
+          <!-- Account name & number-->
+          <div class="flex-1 mb-6">
+            <label class="block text-base font-semibold">Account Name</label>
+            <%= form.text_field :account_name, value: "", placeholder: "Enter name of account", 
+              class: "w-full rounded-md border border-grey-light outline-none px-3 py-2 mt-2 h-[40px]" %>
+          </div>
+          <div class="flex-1">
+            <label class="block text-base font-semibold">Account Number</label>
+            <%= form.text_field :account_number, value: "", placeholder: "Enter account number", 
+              class: "w-full rounded-md border border-grey-light outline-none px-3 py-2 mt-2 h-[40px]" %>
+          </div>
+
+          <!-- Alternative -->
+          <div class="text-2xl text-blue-dark"> OR </div>
+
+          <!-- Account code-->
+          <div>
+            <label>Upload account QR code</label>
+            <%= form.file_field :qr_code %>
+          </div>
+
+        </div>
 
         <div class="text-right">
           <%= form.submit class: "bg-blue-dark text-white font-bold rounded-lg py-2 px-4 mt-8 cursor-pointer hover:bg-grey-dark hover:text-blue-dark transition" %>
