@@ -18,7 +18,12 @@ class OrdersController < ApplicationController
   # GET /orders/new
   def new
     @order = Order.new
+    @order.build_payer_account
+    @order.build_recipient_account
+
     @exchange_rate = ExchangeRate.current_rate.value
+    @recipient_account_types = AccountType.rmb_accounts
+    @payer_account_types = AccountType.cedi_accounts
   end
 
   # GET /orders/1/edit
@@ -28,8 +33,14 @@ class OrdersController < ApplicationController
   # POST /orders or /orders.json
   def create
     @order = Order.new(order_params)
+    @recipient_account = RecipientAccount.new(order_params[:recipient_account_attributes])
+    @payer_account = PayerAccount.new(order_params[:payer_account_attributes])
+    @payer_account.save
     @order.rate = ExchangeRate.current_rate.value
     @order.status = "Pending"
+    @order.recipient_account = @recipient_account
+    @order.payer_account = @payer_account
+    # @order.user = current_user if current_user
 
     respond_to do |format|
       if @order.save
@@ -73,6 +84,11 @@ class OrdersController < ApplicationController
 
     # Only allow a list of trusted parameters through.
     def order_params
-      params.require(:order).permit(:user_id, :amount, :rate, :status)
+      # params.require(:order).permit(:user_id, :amount, :rate, :status)
+      params.require(:order).permit(
+        :amount, :user_id, :rate, :status, :whatsapp_number,
+        payer_account_attributes: [:account_number, :account_name, :account_type_id],
+        recipient_account_attributes: [:account_number, :account_name, :account_type_id]
+      )
     end
 end

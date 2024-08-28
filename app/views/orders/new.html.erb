@@ -44,7 +44,7 @@
           <div class="flex-1">
             <label class="block text-base font-semibold">Enter Amount</label>
             <%= form.number_field :temp_amount, id: "temp_amount", value: "", placeholder: "Enter Amount", required: true, 
-              class: "w-full rounded-md border border-grey-light outline-none px-3 py-2 mt-2 h-[40px]" %>
+              class: "w-full rounded-md border border-grey-light outline-none px-3 py-2 mt-2 h-[40px]", name: nil %>
           </div>
 
           <diV class="flex items-end gap-x-4">
@@ -67,31 +67,87 @@
         <hr class="text-grey-dark my-8"/>
 
         <!-- Recipient account -->
+        <%= form.fields_for :recipient_account do |recipient_form| %>
+          <div>
+            <h1 class="text-blue-dark text-3xl font-bold">Account details</h1>
+            <div class="text-sm text-grey-dark">(The account you want us to credit. Upload the QR code or else enter the account details. You don't have to do both.)</div>
+            <hr class="text-grey-light mb-8"/>
+
+            <!-- Account code-->
+            <div>
+              <label class="block text-base font-semibold">Upload account QR code</label>
+              <%= recipient_form.file_field :qr_code %>
+            </div>
+
+            <!-- Alternative -->
+            <div class="text-2xl font-semibold text-blue-dark my-4"> OR </div>
+
+            <!-- Account type, name & number-->
+            <div class="flex-1 mb-6">
+              <label class="block text-base font-semibold">Account Type</label>
+              <%= recipient_form.select :account_type_id,
+                options_from_collection_for_select(@recipient_account_types || [], :id, :name),
+                {},
+                {class: "w-[50%] block rounded-md border border-grey-light outline-none"}
+              %>
+            </div>
+            <div class="flex-1 mb-6">
+              <label class="block text-base font-semibold">Account Name</label>
+              <%= recipient_form.text_field :account_name, value: "", placeholder: "Enter name of account", 
+                class: "w-[50%] rounded-md border border-grey-light outline-none px-3 py-2 mt-2 h-[40px]" %>
+            </div>
+            <div class="flex-1">
+              <label class="block text-base font-semibold">Account Number</label>
+              <%= recipient_form.text_field :account_number, value: "", placeholder: "Enter account number", 
+                class: "w-[50%] rounded-md border border-grey-light outline-none px-3 py-2 mt-2 h-[40px]" %>
+            </div>
+          </div>
+        <% end %>
+
+        <hr class="text-grey-dark my-8"/>
+
+        <!-- Payer's account -->
+        <%= form.fields_for :payer_account do |payer_form| %>
+          <div>
+            <h1 class="text-blue-dark text-3xl font-bold">Payment details</h1>
+            <div class="text-sm text-grey-dark">(The account you would be making payment from.)</div>
+            <hr class="text-grey-light mb-8"/>
+
+            <!-- Account name & number-->
+            <div class="flex-1 mb-6">
+              <label class="block text-base font-semibold">Account Type</label>
+              <%= payer_form.select :account_type_id,
+                options_from_collection_for_select(@payer_account_types || [], :id, :name),
+                {},
+                {class: "block rounded-md w-[50%] border border-grey-light outline-none"}
+              %>
+            </div>
+            <div class="flex-1 mb-6">
+              <label class="block text-base font-semibold">Account Name</label>
+              <%= payer_form.text_field :account_name, value: "", placeholder: "Enter name of account", 
+                class: "w-[50%] rounded-md border border-grey-light outline-none px-3 py-2 mt-2 h-[40px]" %>
+            </div>
+            <div class="flex-1">
+              <label class="block text-base font-semibold">Account Number</label>
+              <%= payer_form.text_field :account_number, value: "", placeholder: "Enter account number", 
+                class: "w-[50%] rounded-md border border-grey-light outline-none px-3 py-2 mt-2 h-[40px]" %>
+            </div>
+          </div>
+        <% end %>
+
+        <hr class="text-grey-dark my-8"/>
+
+        <!-- Contact info -->
         <div>
-          <h1 class="text-blue-dark text-3xl font-bold">Account details</h1>
+          <h1 class="text-blue-dark text-3xl font-bold">Contact Info</h1>
+          <div class="text-sm text-grey-dark">(Enter number for receipt confirmation.)</div>
           <hr class="text-grey-light mb-8"/>
 
-          <!-- Account name & number-->
-          <div class="flex-1 mb-6">
-            <label class="block text-base font-semibold">Account Name</label>
-            <%= form.text_field :account_name, value: "", placeholder: "Enter name of account", 
-              class: "w-full rounded-md border border-grey-light outline-none px-3 py-2 mt-2 h-[40px]" %>
-          </div>
           <div class="flex-1">
-            <label class="block text-base font-semibold">Account Number</label>
-            <%= form.text_field :account_number, value: "", placeholder: "Enter account number", 
-              class: "w-full rounded-md border border-grey-light outline-none px-3 py-2 mt-2 h-[40px]" %>
+            <label class="block text-base font-semibold">WhatsApp Number</label>
+            <%= form.text_field :whatsapp_number, value: "", placeholder: "Enter whatsapp number", 
+              class: "w-[50%] rounded-md border border-grey-light outline-none px-3 py-2 mt-2 h-[40px]" %>
           </div>
-
-          <!-- Alternative -->
-          <div class="text-2xl text-blue-dark"> OR </div>
-
-          <!-- Account code-->
-          <div>
-            <label>Upload account QR code</label>
-            <%= form.file_field :qr_code %>
-          </div>
-
         </div>
 
         <div class="text-right">

@@ -10,13 +10,14 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2024_08_03_123702) do
+ActiveRecord::Schema[7.0].define(version: 2024_08_25_173102) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
   create_table "account_types", force: :cascade do |t|
     t.string "name"
     t.string "short_name"
+    t.string "currency"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
@@ -49,12 +50,39 @@ ActiveRecord::Schema[7.0].define(version: 2024_08_03_123702) do
 
   create_table "orders", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
     t.uuid "user_id"
+    t.uuid "recipient_account_id", null: false
+    t.uuid "payer_account_id", null: false
     t.decimal "amount"
     t.decimal "rate"
     t.string "status"
+    t.string "whatsapp_number"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.index ["payer_account_id"], name: "index_orders_on_payer_account_id"
+    t.index ["recipient_account_id"], name: "index_orders_on_recipient_account_id"
     t.index ["user_id"], name: "index_orders_on_user_id"
+  end
+
+  create_table "payer_accounts", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+    t.bigint "account_type_id", null: false
+    t.uuid "user_id"
+    t.string "account_name"
+    t.string "account_number"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["account_type_id"], name: "index_payer_accounts_on_account_type_id"
+    t.index ["user_id"], name: "index_payer_accounts_on_user_id"
+  end
+
+  create_table "recipient_accounts", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+    t.bigint "account_type_id", null: false
+    t.uuid "user_id"
+    t.string "account_name"
+    t.string "account_number"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["account_type_id"], name: "index_recipient_accounts_on_account_type_id"
+    t.index ["user_id"], name: "index_recipient_accounts_on_user_id"
   end
 
   create_table "roles", force: :cascade do |t|
@@ -81,6 +109,12 @@ ActiveRecord::Schema[7.0].define(version: 2024_08_03_123702) do
   add_foreign_key "admin_accounts", "account_types"
   add_foreign_key "admin_accounts", "users"
   add_foreign_key "exchange_rates", "users"
+  add_foreign_key "orders", "payer_accounts"
+  add_foreign_key "orders", "recipient_accounts"
   add_foreign_key "orders", "users"
+  add_foreign_key "payer_accounts", "account_types"
+  add_foreign_key "payer_accounts", "users"
+  add_foreign_key "recipient_accounts", "account_types"
+  add_foreign_key "recipient_accounts", "users"
   add_foreign_key "users", "roles"
 end
