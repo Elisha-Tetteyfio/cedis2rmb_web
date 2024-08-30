@@ -9,7 +9,9 @@
         <span class="text-blue text-4xl font-semibold">WeChat</span>, and bank account quickly and efficiently,
         ensuring prompt processing and <span class="text-blue text-4xl font-semibold">Secure</span> transactions.
       </div>
-      <div class="bg-blue text-white px-4 py-2 rounded text-base w-fit mt-8">Login/Register</div>
+      <div class="bg-blue text-white px-4 py-2 rounded text-base w-fit mt-8">
+        <%= link_to "Login/Register", new_user_session_path %>
+      </div>
       <div class="bg-blue text-white rounded text-base w-fit inline md:hidden">
         <%= link_to "BU¥", new_order_path, class: "bg-blue p-2 px-4 rounded text-white" %>
       </div>

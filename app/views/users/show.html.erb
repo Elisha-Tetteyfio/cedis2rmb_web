@@ -1,0 +1,29 @@
+<div class="w-full p-4">
+  <div class="bg-white rounded-lg p-2">
+    <div class="flex  items-center justify-center">
+      <h1 class="font-bold text-4xl">User - <%= @user.username %> </h1>
+    </div>
+    <hr class="border-slate_dark "/>
+
+    <div class="text-font_grey font-medium mb-4">
+      <div class="my-4">
+        <div>Username:</div>
+        <div class="w-[40%] px-4 py-2 border border-slate_medium "> <%= @user.username || "N/A" %> </div>
+      </div>
+
+      <div class="my-4">
+        <div>Email:</div>
+        <div class="w-[40%] px-4 py-2 border border-slate_medium "> <%= @user.email %> </div>
+      </div>
+
+      <div class="mt-8">
+        <%= link_to "Reset user password", edit_user_path(@user), class: "rounded-lg py-3 px-5 bg-slate_dark font-medium text-black" %>
+      </div>
+    </div>
+    <%= link_to "Back to users", users_path, class: "mt-2 rounded-lg py-3 px-5 bg-slate_dark inline-block font-medium" %>
+
+    <div class="inline-block ml-2">
+      <%#= button_to "Destroy this user", @user, method: :delete, class: "mt-2 rounded-lg py-3 px-5 bg-gray-100 font-medium" %>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,52 @@
+<div class="w-[55%] bg-white m-auto my-16 rounded-xl flex justify-between p-8">
+  <div class="w-[55%]">
+    <div class="flex items-center mb-4 gap-x-2.5">
+      <%= image_tag 'logo_blue.svg', alt: 'logo', class: 'w-[40px]' %>
+      <p class="font-bold text-sm">Cedis2RMB</p>
+    </div>
+    <%= image_tag 'signin_img.jpg', alt: 'Sign in', class: '' %>
+  </div>
+
+  <div class="m-auto">
+    <%= form_for(resource, as: resource_name, url: session_path(resource_name)) do |f| %>
+      <h2 class="font-bold mb-4">Login to Cedis2RMB</h2>
+
+      <div class="field">
+        <%= f.label :email, class: 'text-sm font-semibold' %><br />
+        <%= 
+          f.email_field :email,
+          autofocus: true, 
+          autocomplete: "email",
+          placeholder: "hello@example.com",
+          class: 'w-[100%] h-[40px] rounded-lg border-form_border mb-4 placeholder:font-light'
+        %>
+      </div>
+
+      <div class="field">
+        <%= f.label :password, class: 'text-sm font-semibold' %><br />
+        <%= 
+          f.password_field :password,
+          autocomplete: "current-password",
+          placeholder: '••••••••',
+          class: 'w-[100%] h-[40px] rounded-lg border-form_border placeholder:font-light' 
+        %>
+      </div>
+
+      <% if devise_mapping.rememberable? %>
+        <div class="field my-4">
+          <%= f.check_box :remember_me, class: "rounded border-form_border" %>
+          <%= f.label :remember_me, class: "text-font_grey text-sm" %>
+        </div>
+      <% end %>
+
+      <div class="actions">
+        <%= 
+          f.submit "Log in",
+          class: "w-[100%] h-[40px] bg-blue mt-2 rounded-lg  text-white "
+        %>
+      </div>
+    <% end %>
+
+    <%= render "users/shared/links" %>
+  </div>
+</div>
