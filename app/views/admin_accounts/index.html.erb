@@ -1,0 +1,60 @@
+<div class="bg-blue-light p-8 h-screen">
+  <div class="bg-white w-[70%] mx-auto rounded-xl p-4 shadow">
+    <!-- Order summary -->
+    <div class="flex justify-end">
+      <div class="bg-white px-2 text-bold rounded-lg w-fit h-fit border-4 border-grey-light hover:shadow-md transition-shadow">
+        <%= link_to root_path do %>
+          <i class="bi-x text-2xl"></i>
+        <% end %>
+      </div>
+    </div>
+    <div>
+      <div class="text-2xl text-blue-dark text-center">Order summary</div>
+      <table class="bg-grey-light bg-opacity-30 mt-4 mb-8 w-[70%] border border-grey-dark rounded mx-auto">
+        <tbody>
+          <tr>
+            <td class="p-2">Order amount (Cedis)</td>
+            <td><%= @order.amount%></td>
+          </tr>
+          <tr class="bg-white">
+            <td class="p-2">Order amount (RMB)</td>
+            <td><%= @order.amount%></td>
+          </tr>
+          <tr>
+            <td class="p-2">Date</td>
+            <td><%= @order.created_at%></td>
+          </tr>
+          <tr class="bg-white">
+            <td class="p-2">Payment method</td>
+            <td><%= @order.payer_account.account_type.name%></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="text-xl text-blue-dark">
+      Please make your payment of GHS <%= @order.amount %> to any of the accounts below,
+      and we'll get back to you in less than 10 mins.
+    </div>
+    <hr>
+    <div class="mt-4 text-left">
+      <table class="w-[70%]">
+        <thead>
+          <tr>
+            <th class="p-2"> Account type </th>
+            <th> Account number </th>
+            <th> Account name </th>
+          </tr>
+        </thead>
+        <tbody>
+          <% @admin_accounts.each do |account| %>
+            <tr>
+              <td class="p-2"> <%= account.account_type.name %> </td>
+              <td> <%= account.account_number %> </td>
+              <td> <%= account.account_name %> </td>
+            </tr>
+          <% end %>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>

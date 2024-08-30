@@ -4,7 +4,9 @@
     <!-- Header Section -->
     <div class="flex items-center gap-x-6 mb-6">
       <div class=" bg-white px-2 text-bold rounded-lg w-fit h-fit border-4 border-grey-light hover:shadow-md transition-shadow">
-        <i class="bi-arrow-left text-2xl"></i>
+        <%= link_to root_path do %>
+          <i class="bi-arrow-left text-2xl"></i>
+        <% end %>
       </div>
       <h1 class="font-bold text-3xl text-blue-dark">New order</h1>
     </div>
@@ -21,11 +23,11 @@
             <label class="block text-base font-semibold">Select Currency</label>
             <div class="flex gap-x-8">
               <label class="flex items-center space-x-1">
-                <%= radio_button_tag :currency, "cedi", true, class: "mr-2" %>
+                <%= radio_button_tag :currency, "cedi", true, class:"mr-2" %>
                 Cedis ₵
               </label>
               <label class="flex items-center space-x-1">
-                <%= radio_button_tag :currency, "rmb", false, class: "mr-2" %>
+                <%= radio_button_tag :currency, "rmb", false, class:"mr-2" %>
                 RMB ¥
               </label>
             </div>
@@ -50,7 +52,7 @@
           <diV class="flex items-end gap-x-4">
             <button type="button" id="convert-btn"
               class="bg-blue-light text-blue-dark px-4 font-medium border border-blue-light rounded-md h-[40px]">
-              See RMB equivalent
+              Convert to RMB
             </button>
 
             <!-- Display the Conversion Result -->
@@ -151,7 +153,7 @@
         </div>
 
         <div class="text-right">
-          <%= form.submit class: "bg-blue-dark text-white font-bold rounded-lg py-2 px-4 mt-8 cursor-pointer hover:bg-grey-dark hover:text-blue-dark transition" %>
+          <%= form.submit "Place Order", class: "bg-blue-dark text-white font-bold rounded-lg py-2 px-4 mt-8 cursor-pointer hover:bg-grey-dark hover:text-blue-dark transition" %>
         </div>
       <% end %>
     </div>
@@ -161,7 +163,7 @@
 
 
 <script>
-  document.addEventListener("DOMContentLoaded", function() {
+  document.addEventListener("turbo:load", function() {
     const amountInput = document.getElementById("temp_amount");
     const convertBtn = document.getElementById("convert-btn");
     const result = document.getElementById("result");
@@ -210,7 +212,7 @@
     currencyForm.addEventListener('change', function(event) {
       if (event.target.name === 'currency') {
         const convertButton = document.getElementById('convert-btn');
-        convertButton.textContent = event.target.value === 'cedi' ? "See RMB equivalent" : "See Cedis equivalent";
+        convertButton.textContent = event.target.value === 'cedi' ? "Convert to RMB" : "Convert to Cedis";
       }
     });
   });
