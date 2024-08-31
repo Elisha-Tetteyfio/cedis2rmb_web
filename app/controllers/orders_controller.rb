@@ -1,14 +1,15 @@
 class OrdersController < ApplicationController
   before_action :set_order, only: %i[ show edit update destroy ]
+  before_action :authenticate_user!, only: %i[index update edit]
 
   # GET /orders or /orders.json
   def index
     @page = params[:page].to_i.positive? ? params[:page].to_i : 1
     @orders_status = params[:orders_status]
-    @orders = Order.order(created_at: :desc).paginate(page: params[:page])
+    @orders = Order.where(user: current_user).order(created_at: :desc).paginate(page: params[:page])
 
     # Filters
-    @orders = Order.where(status: params[:orders_status]).paginate(page: params[:page]).order(created_at: :desc) if params[:orders_status].present?
+    @orders = Order.where(user: current_user, status: params[:orders_status]).paginate(page: params[:page]).order(created_at: :desc) if params[:orders_status].present?
   end
 
   # GET /orders/1 or /orders/1.json
@@ -40,7 +41,7 @@ class OrdersController < ApplicationController
     @order.status = "Pending"
     @order.recipient_account = @recipient_account
     @order.payer_account = @payer_account
-    # @order.user = current_user if current_user
+    @order.user = current_user if current_user
 
     respond_to do |format|
       if @order.save

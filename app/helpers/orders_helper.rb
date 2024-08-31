@@ -2,22 +2,33 @@ module OrdersHelper
   def order_status_bg(status)
     case status
     when 'Pending'
-      "bg-status_yellow"
+      "bg-yellow-light"
     when 'Completed'
-      "bg-status_green"
+      "bg-green-light"
     when 'Cancelled'
-      "bg-status_red"
+      "bg-red-light"
+    end
+  end
+
+  def order_status_bg_dark(status)
+    case status
+    when 'Pending'
+      "bg-yellow"
+    when 'Completed'
+      "bg-green"
+    when 'Cancelled'
+      "bg-red"
     end
   end
 
   def order_status_color(status)
     case status
     when 'Pending'
-      "text-status_yellow_dark"
+      "text-yellow"
     when 'Completed'
-      "text-status_green_dark"
+      "text-green"
     when 'Cancelled'
-      "text-status_red_dark"
+      "text-red"
     end
   end
 end

@@ -1,5 +1,5 @@
 <% if current_page?(orders_path) %>
-  <div class="flex gap-x-4 py-4 px-8 rounded-t-lg border-b-2 border-solid border-body_bg bg-white">
+  <div class="flex gap-x-4 py-4 px-8 rounded-t-lg border-b-2 border-solid border-grey-light bg-white">
     <%= link_to "All",
       orders_path(orders_status: nil, page: 1),
       class: "#{'active-tab' if current_page?(orders_path(orders_status: nil, page: params[:page]))} py-1 px-4 text-black"
@@ -14,7 +14,7 @@
     %>
   </div>
 <% elsif current_page?(order_path) %>
-  <div class="flex gap-x-4 py-4 px-8 rounded-lg border-b-2 border-solid border-body_bg bg-white">
+  <div class="flex gap-x-4 py-4 px-8 rounded-lg border-b-2 border-solid border-grey-light bg-white">
     <div>
       <%= link_to "<-", 
         orders_path(orders_status: params[:orders_status], page: params[:page]),

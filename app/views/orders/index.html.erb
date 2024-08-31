@@ -1,11 +1,11 @@
-<div class="w-full p-4">
+<div class="w-full p-2 bg-blue-light">
   <%= render 'header' %>
-  
+
   <div class="bg-white rounded-lg">
     <div class="p-4">
       <table class="w-full text-sm ">
         <thead>
-          <tr class="text-left bg-slate_medium border-y-2 border-slate_dark">
+          <tr class="text-left bg-grey-light border-b-2 border-t border-grey-dark">
             <th class="p-2">S/N</th>
             <th class="p-2">Amount(GHS)</th>
             <th class="p-2">Rate</th>
@@ -16,7 +16,7 @@
         </thead>
         <tbody class="bg-white">
           <% @orders.each_with_index do |order, index| %>
-            <tr class="bg-white border-b-2 border-slate_medium border-solid py-0">
+            <tr class="bg-white border-b-2 border-grey-light border-solid py-0">
               <!-- Calculation to get the index -->
               <td class="p-2"><%= (index+(@page*25)-24) %></td>
               <td class="p-2"><%= order.amount %></td>
