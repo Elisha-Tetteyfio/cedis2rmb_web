@@ -1,0 +1,60 @@
+<div class="bg-blue-light p-2">
+  <div class="bg-white rounded p-4">
+    <div class="text-blue-dark text-2xl font-semibold">Editing account details</div>
+    <hr class="border border-blue-dark mb-4">
+
+    <%#= form_for(current_user, as: resource_name, url: registration_path(resource_name), html: { method: :put }) do |f| %>
+    <%= form_for(current_user, as: resource_name, url: user_registration_path) do |f| %>
+      <% if @user.errors.any? %>
+        <div class="alert alert-danger">
+          <ul>
+            <% @user.errors.full_messages.each do |message| %>
+              <li class="text-blue pb-2 italic"><%= message %></li>
+            <% end %>
+          </ul>
+        </div>
+      <% end %>
+      <div class="field text-grey-dark font-semibold mb-4">
+        <p><%= f.label :email %></p>
+        <p>
+          <%= f.email_field :email,
+            autofocus: true,
+            autocomplete: "email",
+            class: "rounded-lg w-[40%]"
+          %>
+        </p>
+      </div>
+
+      <div class="field text-grey-dark font-semibold mb-4">
+        <p><%= f.label :username %></p>
+        <p><%= f.text_field :username, class: "rounded-lg w-[40%]" %></p>
+      </div>
+
+      <div class="text-blue-dark text-xl font-semibold mt-8">Password Details</div>
+      <hr class="border border-blue-light mb-4">
+
+      <div class="field text-grey-dark font-semibold mb-4">
+        <p><%= f.label :current_password %> <i>(enter current password to confirm changes)</i></p>
+        <p><%= f.password_field :current_password, class: "rounded-lg w-[40%]" %></p>
+      </div>
+
+      <div class="field text-grey-dark font-semibold mb-4">
+        <p><%= f.label :password %> <i>(leave blank if you don't want to change it)</i></p>
+        <p><%= f.password_field :password, class: "rounded-lg w-[40%]" %></p>
+        <% if @minimum_password_length %>
+          <p><em><%= @minimum_password_length %> characters minimum</em></p>
+        <% end %>
+      </div>
+
+      <div class="field text-grey-dark font-semibold mb-4">
+        <p><%= f.label :password_confirmation %></p>
+        <p><%= f.password_field :password_confirmation, class: "rounded-lg w-[40%]" %></p>
+      </div>
+
+      <div class="actions">
+        <%= f.submit "Update", class: "text-white bg-blue px-4 py-2 rounded-md cursor-pointer" %>
+      </div>
+    <% end %>
+    <!--<div>Unhappy? <%#= button_to "Cancel my account", registration_path(resource_name), data: { confirm: "Are you sure?", turbo_confirm: "Are you sure?" }, method: :delete %></div>-->
+  </div>
+</div>

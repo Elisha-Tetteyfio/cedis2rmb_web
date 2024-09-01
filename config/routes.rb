@@ -6,6 +6,7 @@ Rails.application.routes.draw do
   # Defines the root path route ("/")
   devise_for :users, controllers: {
     sessions: 'users/sessions',
+    registrations: 'users/registrations'
   }, skip: [ :passwords, :confirmations, :unlocks, :omniauth_callbacks]
 
   root "homepage#index"
