@@ -5,7 +5,11 @@ class User < ApplicationRecord
          :recoverable, :rememberable, :validatable
   belongs_to :role
 
-  def admin?
-    role.role_name == 'Admin'
+  before_save :set_username
+
+  private
+
+  def set_username
+    self.username = email.split('@').first
   end
 end

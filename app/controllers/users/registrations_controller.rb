@@ -1,14 +1,24 @@
 # frozen_string_literal: true
 
 class Users::RegistrationsController < Devise::RegistrationsController
-  # before_action :configure_sign_in_params, only: [:create]
   def edit
     render :edit
+  end
+
+  def create
+    super do |resource|
+      resource.role = Role.find_by(role_name: "User")
+      resource.save
+    end
   end
 
   protected
 
   def after_update_path_for(resource)
-    orders_path
+    dashboard_path
+  end
+
+  def after_sign_up_path_for(resource)
+    dashboard_path
   end
 end
