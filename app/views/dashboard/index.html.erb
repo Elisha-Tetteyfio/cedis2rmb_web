@@ -1,13 +1,16 @@
-<div class="w-full bg-blue-light p-2 border-t border-grey-light">
+<div class="w-full bg-blue-light p-2 border-t border-grey-light text-grey-dark">
 
   <div class="bg-white rounded-lg shadow">
     <div class="p-4">
-      <div>
-        Hello <%= current_user.username %>
+      <div class="text-2xl">
+        Hello <span class="text-blue-dark"><%= current_user.username %></span>,
       </div>
       <div>
-        The current rate of Cedis2RMB is 0.5, 
-        <span class="text-blue">Place order now?</span>
+        The current rate at Cedis2RMB is
+        <span class="font-semibold text-blue-dark text-xl"><%= @current_rate %></span>, 
+        <span class="text-blue">
+          <%= link_to "Place order now?", new_order_path, target: "_blank" %>
+        </span>
       </div>
     </div>
   </div>

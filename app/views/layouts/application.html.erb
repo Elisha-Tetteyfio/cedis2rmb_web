@@ -18,7 +18,11 @@
 
   <body>
     <main class="w-[100%]">
-      <% if user_signed_in? & !current_page?(root_path) %>
+      <% if controller_name != "admin_accounts" &&
+        !current_page?(root_path) &
+        !current_page?(new_order_path) &
+        user_signed_in?
+      %>
         <div class="w-[100%] flex">
           <%= render "shared/side_nav" %>
           <p class="notice"><%#= notice %></p>

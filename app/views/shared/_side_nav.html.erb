@@ -7,7 +7,9 @@
       </div>
     </div>
     <div class="flex flex-col gap-y-1">
-      <div class= "<%='active-link' if current_page?(root_path) %> w-[100%] h-[30px] px-2 flex items-center m-auto rounded bg-opacity-10">Buy RMB</div>
+      <div class= "<%='active-link' if current_page?(root_path) %> w-[100%] h-[30px] px-2 flex items-center m-auto rounded bg-opacity-10">
+        <%= link_to "Buy RMB", new_order_path, target: "_blank" %>
+      </div>
       <div class= "<%='active-link' if controller_name=='orders' %> w-[100%] h-[30px] px-2 flex items-center m-auto rounded bg-opacity-10">
         <%= link_to "My Orders", orders_path %>
       </div>

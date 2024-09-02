@@ -3,8 +3,14 @@
     <!-- Order summary -->
     <div class="flex justify-end">
       <div class="bg-white px-2 text-bold rounded-lg w-fit h-fit border-4 border-grey-light hover:shadow-md transition-shadow">
-        <%= link_to root_path do %>
-          <i class="bi-x text-2xl"></i>
+        <% if current_user %>
+          <%= link_to dashboard_path do %>
+            <i class="bi-x text-2xl"></i>
+          <% end %>
+        <% else %>
+          <%= link_to root_path do %>
+            <i class="bi-x text-2xl"></i>
+          <% end %>
         <% end %>
       </div>
     </div>
