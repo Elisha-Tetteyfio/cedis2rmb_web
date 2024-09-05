@@ -45,7 +45,7 @@
         <div class="flex gap-x-4 items-end justify-between">
           <div class="flex-1">
             <label class="block text-base font-semibold">Enter Amount</label>
-            <%= form.number_field :temp_amount, id: "temp_amount", value: "", placeholder: "Enter Amount", required: true, 
+            <%= form.number_field :temp_amount, id: "temp_amount", value: @order.amount, placeholder: "Enter Amount", required: true, 
               class: "w-full rounded-md border border-grey-light outline-none px-3 py-2 mt-2 h-[40px]", name: nil %>
           </div>
 
@@ -88,19 +88,19 @@
             <div class="flex-1 mb-6">
               <label class="block text-base font-semibold">Account Type</label>
               <%= recipient_form.select :account_type_id,
-                options_from_collection_for_select(@recipient_account_types || [], :id, :name),
+                options_from_collection_for_select(@recipient_account_types || [], :id, :name, @recipient_account[:account_type_id]),
                 {},
                 {class: "w-[50%] block rounded-md border border-grey-light outline-none"}
               %>
             </div>
             <div class="flex-1 mb-6">
               <label class="block text-base font-semibold">Account Name</label>
-              <%= recipient_form.text_field :account_name, value: "", placeholder: "Enter name of account", 
+              <%= recipient_form.text_field :account_name, value: @recipient_account.account_name, placeholder: "Enter name of account", 
                 class: "w-[50%] rounded-md border border-grey-light outline-none px-3 py-2 mt-2 h-[40px]" %>
             </div>
             <div class="flex-1">
               <label class="block text-base font-semibold">Account Number</label>
-              <%= recipient_form.text_field :account_number, value: "", placeholder: "Enter account number", 
+              <%= recipient_form.text_field :account_number, value: @recipient_account.account_number, placeholder: "Enter account number", 
                 class: "w-[50%] rounded-md border border-grey-light outline-none px-3 py-2 mt-2 h-[40px]" %>
             </div>
           </div>
@@ -119,19 +119,19 @@
             <div class="flex-1 mb-6">
               <label class="block text-base font-semibold">Account Type</label>
               <%= payer_form.select :account_type_id,
-                options_from_collection_for_select(@payer_account_types || [], :id, :name),
+                options_from_collection_for_select(@payer_account_types || [], :id, :name, @payer_account[:account_type_id]),
                 {},
                 {class: "block rounded-md w-[50%] border border-grey-light outline-none"}
               %>
             </div>
             <div class="flex-1 mb-6">
               <label class="block text-base font-semibold">Account Name</label>
-              <%= payer_form.text_field :account_name, value: "", placeholder: "Enter name of account", 
+              <%= payer_form.text_field :account_name, value: @payer_account.account_name, placeholder: "Enter name of account", 
                 class: "w-[50%] rounded-md border border-grey-light outline-none px-3 py-2 mt-2 h-[40px]" %>
             </div>
             <div class="flex-1">
               <label class="block text-base font-semibold">Account Number</label>
-              <%= payer_form.text_field :account_number, value: "", placeholder: "Enter account number", 
+              <%= payer_form.text_field :account_number, value: @payer_account.account_number, placeholder: "Enter account number", 
                 class: "w-[50%] rounded-md border border-grey-light outline-none px-3 py-2 mt-2 h-[40px]" %>
             </div>
           </div>
@@ -147,13 +147,13 @@
 
           <div class="flex-1">
             <label class="block text-base font-semibold">WhatsApp Number</label>
-            <%= form.text_field :whatsapp_number, value: "", placeholder: "Enter whatsapp number", 
+            <%= form.text_field :whatsapp_number, value: @order.whatsapp_number, placeholder: "Enter whatsapp number", 
               class: "w-[50%] rounded-md border border-grey-light outline-none px-3 py-2 mt-2 h-[40px]" %>
           </div>
         </div>
 
         <div class="text-right">
-          <%= form.submit "Place Order", class: "bg-blue-dark text-white font-bold rounded-lg py-2 px-4 mt-8 cursor-pointer hover:bg-grey-dark hover:text-blue-dark transition" %>
+          <%= form.submit "Review Order", class: "bg-blue-dark text-white font-bold rounded-lg py-2 px-4 mt-8 cursor-pointer hover:bg-grey-dark hover:text-blue-dark transition" %>
         </div>
       <% end %>
     </div>

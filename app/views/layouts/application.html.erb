@@ -21,6 +21,7 @@
       <% if controller_name != "admin_accounts" &&
         !current_page?(root_path) &
         !current_page?(new_order_path) &
+        !current_page?(summary_orders_path) &
         user_signed_in?
       %>
         <div class="w-[100%] flex">

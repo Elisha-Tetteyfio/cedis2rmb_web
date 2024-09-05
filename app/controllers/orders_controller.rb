@@ -18,9 +18,16 @@ class OrdersController < ApplicationController
 
   # GET /orders/new
   def new
-    @order = Order.new
-    @order.build_payer_account
-    @order.build_recipient_account
+    order_params = session[:order_params]
+    if order_params.present?
+      @order = Order.new(order_params)
+      @payer_account = @order.build_payer_account(order_params["payer_account_attributes"])
+      @recipient_account = @order.build_recipient_account(order_params["recipient_account_attributes"])
+    else
+      @order = Order.new
+      @payer_account = @order.build_payer_account
+      @recipient_account = @order.build_recipient_account
+    end
 
     @exchange_rate = ExchangeRate.current_rate.value
     @recipient_account_types = AccountType.rmb_accounts
@@ -33,10 +40,24 @@ class OrdersController < ApplicationController
 
   # POST /orders or /orders.json
   def create
-    @order = Order.new(order_params)
+    session[:order_params] = order_params
+    redirect_to summary_orders_path
+  end
+
+  # GET /orders/summary
+  def summary
+    order_params = session[:order_params]
     @recipient_account = RecipientAccount.new(order_params[:recipient_account_attributes])
     @payer_account = PayerAccount.new(order_params[:payer_account_attributes])
-    @payer_account.save
+    @order = Order.new(order_params)
+  end
+
+  # POST /orders/confirm
+  def confirm
+    order_params = session[:order_params]
+    @order = Order.new(order_params)
+    @recipient_account = RecipientAccount.new(order_params["recipient_account_attributes"])
+    @payer_account = PayerAccount.new(order_params["payer_account_attributes"])
     @order.rate = ExchangeRate.current_rate.value
     @order.status = "Pending"
     @order.recipient_account = @recipient_account
@@ -45,6 +66,7 @@ class OrdersController < ApplicationController
 
     respond_to do |format|
       if @order.save
+        session.delete(:order_params)
         format.html { redirect_to "/admin_account/#{@order.id}", notice: "Order was successfully created." }
         format.json { render :show, status: :created, location: @order }
       else
@@ -85,7 +107,6 @@ class OrdersController < ApplicationController
 
     # Only allow a list of trusted parameters through.
     def order_params
-      # params.require(:order).permit(:user_id, :amount, :rate, :status)
       params.require(:order).permit(
         :amount, :user_id, :rate, :status, :whatsapp_number,
         payer_account_attributes: [:account_number, :account_name, :account_type_id],
