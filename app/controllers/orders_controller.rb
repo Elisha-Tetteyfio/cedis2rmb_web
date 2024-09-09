@@ -89,7 +89,7 @@ class OrdersController < ApplicationController
 
     respond_to do |format|
       if @order.save
-        delete_session_data
+        session.delete(:order_params)
         format.html { redirect_to "/admin_account/#{@order.id}", notice: "Order was successfully created." }
         format.json { render :show, status: :created, location: @order }
       else
@@ -143,10 +143,5 @@ class OrdersController < ApplicationController
       @order.recipient_account = @recipient_account
       @order.payer_account = @payer_account
       @order.user = current_user if current_user
-    end
-
-    def delete_session_data
-      session.delete(:order_params)
-      session.delete(:uploaded_image_blob_id)
     end
 end
