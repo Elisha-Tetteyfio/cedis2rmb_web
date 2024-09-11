@@ -46,7 +46,8 @@
           <div class="flex-1">
             <label class="block text-base font-semibold">Enter Amount</label>
             <%= form.number_field :temp_amount, id: "temp_amount", value: @order.amount, placeholder: "Enter Amount", required: true, 
-              class: "w-full rounded-md border border-grey-light outline-none px-3 py-2 mt-2 h-[40px]", name: nil %>
+              class: "w-full rounded-md border border-grey-light outline-none px-3 py-2 mt-2 h-[40px]",
+              name: nil, step: ".01", min: @limit.min_value, max: @limit.max_value %>
           </div>
 
           <diV class="flex items-end gap-x-4">
@@ -153,7 +154,10 @@
         </div>
 
         <div class="text-right">
-          <%= form.submit "Review Order", class: "bg-blue-dark text-white font-bold rounded-lg py-2 px-4 mt-8 cursor-pointer hover:bg-grey-dark hover:text-blue-dark transition" %>
+          <%= form.submit "Review Order",
+            id: "submit-btn",
+            class: "bg-blue-dark text-white font-bold rounded-lg py-2 px-4 mt-8 cursor-pointer hover:bg-grey-dark hover:text-blue-dark transition"
+          %>
         </div>
       <% end %>
     </div>
@@ -169,6 +173,7 @@
     const result = document.getElementById("result");
     const hiddenAmountField = document.getElementById("amount");
     const currencyForm = document.getElementById('currencyform');
+    const submitButton = document.getElementById('submit-btn');
     var exchangeRate = <%= @exchange_rate %>;
 
     // Display converted amount
@@ -182,6 +187,7 @@
       }
 
       let convertedAmount;
+      
       if (selectedCurrency === "cedi") {
         convertedAmount = (amount * exchangeRate).toFixed(2);
         result.textContent = `¥ ${convertedAmount}`;
@@ -192,7 +198,7 @@
     });
 
     //Update amount field
-    amountInput.addEventListener("change", function() {
+    submitButton.addEventListener("click", function() {
       const selectedCurrency = document.querySelector('input[name="currency"]:checked').value;
       const amount = parseFloat(amountInput.value);
     

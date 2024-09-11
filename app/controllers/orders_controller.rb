@@ -32,6 +32,7 @@ class OrdersController < ApplicationController
     @exchange_rate = ExchangeRate.current_rate.value
     @recipient_account_types = AccountType.rmb_accounts
     @payer_account_types = AccountType.cedi_accounts
+    @limit = Limit.order(created_at: :desc).first
   end
 
   # GET /orders/1/edit
@@ -70,6 +71,7 @@ class OrdersController < ApplicationController
     @recipient_account = RecipientAccount.new(order_params[:recipient_account_attributes])
     @payer_account = PayerAccount.new(order_params[:payer_account_attributes])
     @order = Order.new(order_params)
+    @exchange_rate = ExchangeRate.current_rate.value
   end
 
   # POST /orders/confirm

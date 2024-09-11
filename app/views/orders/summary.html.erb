@@ -18,11 +18,11 @@
           </tr>
           <tr class="bg-white">
             <td class="p-2">Order amount (Cedis)</td>
-            <td><%= @order.amount%></td>
+            <td><%= format_amount(@order.amount)%></td>
           </tr>
           <tr class="bg-white">
             <td class="p-2">Order amount (RMB)</td>
-            <td><%= @order.amount%></td>
+            <td><%= format_amount(convert_to_rmb(@order.amount, @exchange_rate))%></td>
           </tr>
           <tr>
             <td class="p-2">Account type</td>
