@@ -1,6 +1,6 @@
 <div class="bg-blue-light p-2 min-h-screen">
 <!-- <div class="bg-blue-light p-6  flex justify-center items-center"> -->
-  <div class="w-[70%] max-w-4xl mx-auto my-4 p-4 rounded-xl bg-white shadow-lg">
+  <div class="lg:w-[70%] max-w-4xl mx-auto my-4 p-4 rounded-xl bg-white shadow-lg">
     <!-- Header Section -->
     <div class="flex items-center gap-x-6 mb-6">
       <div class=" bg-white px-2 text-bold rounded-lg w-fit h-fit border-4 border-grey-light hover:shadow-md transition-shadow">
@@ -11,16 +11,25 @@
       <h1 class="font-bold text-3xl text-blue-dark">New order</h1>
     </div>
 
-    <hr class="mb-8 border-grey-dark">
+    <hr class="mb-2 md:mb-8 border-grey-dark">
 
     <%#= link_to "Back to orders", orders_path, class: "ml-2 rounded-lg py-3 px-5 bg-gray-100 inline-block font-medium" %>
 
     <div class="space-y-8 text-grey-dark">
       <%= form_with(model: @order, class: "contents", id: "currencyform") do |form| %>
-        <div class="flex justify-between mb-8">
+        <div class="md:flex md:justify-between md:flex-row-reverse mb-8">
+          
+          <!--Display rate -->
+          <div class="flex items-center justify-between md:justify-center space-x-2 my-2">
+            <span class="font-semibold">Rate:</span>
+            <p class="text-xl text-blue-dark font-bold bg-grey-light bg-opacity-30 text-center py-1 px-3 rounded-lg border border-grey-light">
+              <%= @exchange_rate %>
+            </p>
+          </div>
+
           <!-- Currency conversion -->
           <div>
-            <label class="block text-base font-semibold">Select Currency</label>
+            <h3 class="block text-base font-semibold">Select Currency</h3>
             <div class="flex gap-x-8">
               <label class="flex items-center space-x-1">
                 <%= radio_button_tag :currency, "cedi", true, class:"mr-2" %>
@@ -32,25 +41,17 @@
               </label>
             </div>
           </div>
-              
-          <!--Display rate -->
-          <div class="flex items-center space-x-2">
-            <span class="font-semibold">Rate:</span>
-            <p class="text-xl text-blue-dark font-bold bg-grey-light bg-opacity-30 text-center py-1 px-3 rounded-lg border border-grey-light">
-              <%= @exchange_rate %>
-            </p>
-          </div>          
         </div>
 
-        <div class="flex gap-x-4 items-end justify-between">
+        <div class="gap-x-4 items-end justify-between space-y-2">
           <div class="flex-1">
             <label class="block text-base font-semibold">Enter Amount</label>
-            <%= form.number_field :temp_amount, id: "temp_amount", value: @order.amount, placeholder: "Enter Amount", required: true, 
-              class: "w-full rounded-md border border-grey-light outline-none px-3 py-2 mt-2 h-[40px]",
+            <%= form.number_field :temp_amount, id: "temp_amount", value: @order.amount, placeholder: "e.g. 100", required: true, 
+              class: "w-full rounded-md border border-grey-light outline-none px-3 py-2 mt-2 h-[40px] placeholder:font-light placeholder:italic",
               name: nil, step: ".01", min: @limit.min_value, max: @limit.max_value %>
           </div>
 
-          <diV class="flex items-end gap-x-4">
+          <diV class="flex items-end gap-x-2">
             <button type="button" id="convert-btn"
               class="bg-blue-light text-blue-dark px-4 font-medium border border-blue-light rounded-md h-[40px]">
               Convert to RMB
@@ -91,18 +92,18 @@
               <%= recipient_form.select :account_type_id,
                 options_from_collection_for_select(@recipient_account_types || [], :id, :name, @recipient_account[:account_type_id]),
                 {},
-                {class: "w-[50%] block rounded-md border border-grey-light outline-none"}
+                {class: "w-full md:w-[50%] block rounded-md border border-grey-light outline-none"}
               %>
             </div>
             <div class="flex-1 mb-6">
               <label class="block text-base font-semibold">Account Name</label>
-              <%= recipient_form.text_field :account_name, value: @recipient_account.account_name, placeholder: "Enter name of account", 
-                class: "w-[50%] rounded-md border border-grey-light outline-none px-3 py-2 mt-2 h-[40px]" %>
+              <%= recipient_form.text_field :account_name, value: @recipient_account.account_name, placeholder: "e.g. Jane Doe", 
+                class: "w-full md:w-[50%] rounded-md border border-grey-light outline-none px-3 py-2 mt-2 h-[40px] placeholder:font-light placeholder:italic" %>
             </div>
             <div class="flex-1">
               <label class="block text-base font-semibold">Account Number</label>
-              <%= recipient_form.text_field :account_number, value: @recipient_account.account_number, placeholder: "Enter account number", 
-                class: "w-[50%] rounded-md border border-grey-light outline-none px-3 py-2 mt-2 h-[40px]" %>
+              <%= recipient_form.text_field :account_number, value: @recipient_account.account_number, placeholder: "e.g. 0011223344556677", 
+                class: "w-full md:w-[50%] rounded-md border border-grey-light outline-none px-3 py-2 mt-2 h-[40px] placeholder:font-light placeholder:italic" %>
             </div>
           </div>
         <% end %>
@@ -122,18 +123,18 @@
               <%= payer_form.select :account_type_id,
                 options_from_collection_for_select(@payer_account_types || [], :id, :name, @payer_account[:account_type_id]),
                 {},
-                {class: "block rounded-md w-[50%] border border-grey-light outline-none"}
+                {class: "w-full md:w-[50%] block rounded-md border border-grey-light outline-none"}
               %>
             </div>
             <div class="flex-1 mb-6">
               <label class="block text-base font-semibold">Account Name</label>
-              <%= payer_form.text_field :account_name, value: @payer_account.account_name, placeholder: "Enter name of account", 
-                class: "w-[50%] rounded-md border border-grey-light outline-none px-3 py-2 mt-2 h-[40px]" %>
+              <%= payer_form.text_field :account_name, value: @payer_account.account_name, placeholder: "e.g. John Doe", 
+                class: "w-full md:w-[50%] rounded-md border border-grey-light outline-none px-3 py-2 mt-2 h-[40px] placeholder:font-light placeholder:italic" %>
             </div>
             <div class="flex-1">
               <label class="block text-base font-semibold">Account Number</label>
-              <%= payer_form.text_field :account_number, value: @payer_account.account_number, placeholder: "Enter account number", 
-                class: "w-[50%] rounded-md border border-grey-light outline-none px-3 py-2 mt-2 h-[40px]" %>
+              <%= payer_form.text_field :account_number, value: @payer_account.account_number, placeholder: "e.g. 0011223344556677", 
+                class: "w-full md:w-[50%] rounded-md border border-grey-light outline-none px-3 py-2 mt-2 h-[40px] placeholder:font-light placeholder:italic" %>
             </div>
           </div>
         <% end %>
@@ -148,8 +149,8 @@
 
           <div class="flex-1">
             <label class="block text-base font-semibold">WhatsApp Number</label>
-            <%= form.text_field :whatsapp_number, value: @order.whatsapp_number, placeholder: "Enter whatsapp number", 
-              class: "w-[50%] rounded-md border border-grey-light outline-none px-3 py-2 mt-2 h-[40px]" %>
+            <%= form.text_field :whatsapp_number, value: @order.whatsapp_number, placeholder: "e.g. +233123456789", 
+              class: "w-full md:w-[50%] rounded-md border border-grey-light outline-none px-3 py-2 mt-2 h-[40px] placeholder:font-thin placeholder:italic" %>
           </div>
         </div>
 
