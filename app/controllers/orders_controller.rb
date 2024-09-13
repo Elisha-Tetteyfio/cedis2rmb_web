@@ -1,6 +1,8 @@
 class OrdersController < ApplicationController
   before_action :set_order, only: %i[ show edit update destroy ]
-  before_action :authenticate_user!, only: %i[index update edit]
+  before_action :authenticate_user!, only: %i[index update edit show]
+
+  rescue_from ActiveRecord::RecordNotFound, with: :order_not_found
 
   # GET /orders or /orders.json
   def index
@@ -145,5 +147,9 @@ class OrdersController < ApplicationController
       @order.recipient_account = @recipient_account
       @order.payer_account = @payer_account
       @order.user = current_user if current_user
+    end
+
+    def order_not_found
+      render 'homepage/index', status: 404
     end
 end

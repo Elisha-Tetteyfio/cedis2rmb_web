@@ -14,5 +14,7 @@ Rails.application.routes.draw do
     registrations: 'users/registrations'
   }, skip: [ :passwords, :confirmations, :unlocks, :omniauth_callbacks]
 
+  get '*others', to: "homepage#index"
+
   root "homepage#index"
 end
