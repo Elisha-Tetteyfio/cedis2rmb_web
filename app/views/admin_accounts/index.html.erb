@@ -14,9 +14,23 @@
         <% end %>
       </div>
     </div>
+    <div class="text-xl text-blue-dark">
+      Please make your payment of GHS <%= @order.amount %> to any of the accounts below,
+      and we'll get back to you in less than 10 mins.
+    </div>
+    <hr>
+    <div class="mt-4 text-left md:grid md:grid-cols-2">
+      <% @admin_accounts.each do |account| %>
+        <div class="my-2">
+          <div class="text-blue-dark text-2xl"> <%= account.account_type.name %> </div>
+          <div> <%= account.account_number %> </div>
+          <div> <%= account.account_name %> </div>
+        </div>
+      <% end %>
+    </div>
     <div>
       <div class="text-2xl text-blue-dark text-center">Order summary</div>
-      <table class="bg-grey-light bg-opacity-30 mt-4 mb-8 w-[70%] border border-grey-dark rounded mx-auto">
+      <table class="bg-grey-light bg-opacity-30 mt-4 mb-8 w-[100%] md:w-[70%] border border-grey-dark rounded mx-auto">
         <tbody>
           <tr>
             <td class="p-2">Order amount (Cedis)</td>
@@ -24,7 +38,7 @@
           </tr>
           <tr class="bg-white">
             <td class="p-2">Order amount (RMB)</td>
-            <td><%= @order.amount%></td>
+            <td><%= convert_to_rmb(@order.amount, @order.rate)%></td>
           </tr>
           <tr>
             <td class="p-2">Date</td>
@@ -34,31 +48,6 @@
             <td class="p-2">Payment method</td>
             <td><%= @order.payer_account.account_type.name%></td>
           </tr>
-        </tbody>
-      </table>
-    </div>
-    <div class="text-xl text-blue-dark">
-      Please make your payment of GHS <%= @order.amount %> to any of the accounts below,
-      and we'll get back to you in less than 10 mins.
-    </div>
-    <hr>
-    <div class="mt-4 text-left">
-      <table class="w-[70%]">
-        <thead>
-          <tr>
-            <th class="p-2"> Account type </th>
-            <th> Account number </th>
-            <th> Account name </th>
-          </tr>
-        </thead>
-        <tbody>
-          <% @admin_accounts.each do |account| %>
-            <tr>
-              <td class="p-2"> <%= account.account_type.name %> </td>
-              <td> <%= account.account_number %> </td>
-              <td> <%= account.account_name %> </td>
-            </tr>
-          <% end %>
         </tbody>
       </table>
     </div>

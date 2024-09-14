@@ -1,5 +1,5 @@
 class OrdersController < ApplicationController
-  before_action :set_order, only: %i[ show edit update destroy ]
+  before_action :set_order, only: %i[ show edit update ]
   before_action :authenticate_user!, only: %i[index update edit show]
 
   rescue_from ActiveRecord::RecordNotFound, with: :order_not_found
@@ -113,16 +113,6 @@ class OrdersController < ApplicationController
         format.html { render :edit, status: :unprocessable_entity }
         format.json { render json: @order.errors, status: :unprocessable_entity }
       end
-    end
-  end
-
-  # DELETE /orders/1 or /orders/1.json
-  def destroy
-    @order.destroy
-
-    respond_to do |format|
-      format.html { redirect_to orders_url, notice: "Order was successfully destroyed." }
-      format.json { head :no_content }
     end
   end
 
