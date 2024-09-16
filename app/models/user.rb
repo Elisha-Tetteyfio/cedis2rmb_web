@@ -5,7 +5,7 @@ class User < ApplicationRecord
          :recoverable, :rememberable, :validatable
   belongs_to :role
 
-  before_save :set_username
+  before_create :set_username
 
   private
 

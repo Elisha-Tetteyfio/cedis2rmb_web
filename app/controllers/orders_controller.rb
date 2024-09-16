@@ -125,7 +125,7 @@ class OrdersController < ApplicationController
     # Only allow a list of trusted parameters through.
     def order_params
       params.require(:order).permit(
-        :amount, :user_id, :rate, :status, :whatsapp_number,
+        :amount, :user_id, :rate, :status, :whatsapp_number, :reference,
         payer_account_attributes: [:account_number, :account_name, :account_type_id],
         recipient_account_attributes: [:account_number, :account_name, :account_type_id, :qr_code]
       )
