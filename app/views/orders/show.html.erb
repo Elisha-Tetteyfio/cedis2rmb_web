@@ -5,10 +5,12 @@
 
     <div class="py-4 border-b-2 m-2 border-grey-light w-[50%] flex justify-between items-center">
       <div class="flex gap-x-4 items-center">
-        <div class="w-[80px] h-[80px] rounded-full bg-blue bg-opacity-10 text-blue flex justify-center items-center">GU</div>
+        <div class="w-[80px] h-[80px] rounded-full bg-blue bg-opacity-10 text-blue flex justify-center items-center">
+          <%= @order.user.username_initials %>
+        </div>
         <div>
           <div class="text-lg"><%= @order.user.nil? ? "Guest User" : @order.user&.username %></div>
-          <div class="text-grey-dark text-xs">GHS <%= @order.amount %></div>
+          <div class="text-grey-dark text-xs">GHS <%= format_amount(@order.amount) %></div>
           <div class="text-xs <%= order_status_color(@order.status) %>"><%= @order.status %></div>
         </div>
       </div>
@@ -43,7 +45,7 @@
       </div>
       <div class="mb-4">
         <div>Rate</div>
-        <div class="w-[40%] px-4 py-2 border border-grey-light"> <%= @order.rate %> </div>
+        <div class="w-[40%] px-4 py-2 border border-grey-light"> <%= format_amount(@order.rate) %> </div>
       </div>
       <div class="mb-4">
         <div>Account name</div>

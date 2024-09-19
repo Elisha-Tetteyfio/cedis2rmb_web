@@ -21,8 +21,8 @@
               <!-- Calculation to get the index -->
               <td class="p-2"><%= (index+(@page*25)-24) %></td>
               <td class="p-2"><%= order.order_code %></td>
-              <td class="p-2"><%= order.amount %></td>
-              <td class="p-2"><%= order.rate %></td>
+              <td class="p-2"><%= format_amount(order.amount) %></td>
+              <td class="p-2"><%= format_amount(order.rate) %></td>
               <td class="p-2">
                 <div class="rounded text-center py-0.5 <%= order_status_bg(order.status) %>"><%= order.status %></div>
               </td>

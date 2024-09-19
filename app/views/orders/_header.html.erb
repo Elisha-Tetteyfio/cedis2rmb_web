@@ -16,10 +16,11 @@
 <% elsif current_page?(order_path) %>
   <div class="flex gap-x-4 py-4 px-8 rounded-lg border-b-2 border-solid border-grey-light bg-white">
     <div>
-      <%= link_to "<-", 
-        orders_path(orders_status: params[:orders_status], page: params[:page]),
-        class: "px-4 py-2 bg-blue bg-opacity-10 rounded text-blue font-bold"
+      <%= link_to orders_path(orders_status: params[:orders_status], page: params[:page]),
+        class: "px-4 py-2 bg-blue bg-opacity-10 rounded text-blue font-bold" do
       %>
+        <i class="bi-arrow-left text-2xl"></i>
+      <% end %>
     </div>
     <div>Back to orders</div>
   </div>
