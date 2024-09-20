@@ -12,6 +12,19 @@
           <%= link_to "Place order now?", new_order_path, target: "_blank" %>
         </span>
       </div>
+      <hr class="text-grey-light mb-8">
+      <div class=" text-lg font-medium">
+        Have any pending orders? Make payment to any of these accounts using the order code as reference.
+        <div class="border border-grey-light rounded-md mt-2 p-4 w-fit min-w-[50%]">
+          <% @admin_accounts.each_with_index do |account, index| %>
+            <div class="my-4 font-medium text-blue-dark">
+              <div class="text-blue-dark font-medium my-[-5px]"> <%= index+1 %>. <%= account.account_type.name %> </div>
+              <div class="ml-4 my-[-5px]"> <%= account.account_number %> </div>
+              <div class="ml-4 my-[-5px]"> <%= account.account_name %> </div>
+            </div>
+          <% end %>
+        </div>
+      </div>
     </div>
   </div>
 </div>

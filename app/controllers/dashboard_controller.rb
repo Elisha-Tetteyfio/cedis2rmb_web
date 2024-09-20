@@ -3,5 +3,6 @@ class DashboardController < ApplicationController
   
   def index
     @current_rate = ExchangeRate.current_rate.value
+    @admin_accounts = AdminAccount.all
   end
 end
