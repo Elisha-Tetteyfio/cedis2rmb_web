@@ -1,3 +1,9 @@
 <div class="h-[50px] w-[100%] bg-white flex items-center font-bold p-4">
-  Orders
+  <% if current_page?(dashboard_path) %>
+    Dashboard
+  <% elsif controller_name=='orders' %>
+    Orders
+  <% elsif current_namespace?('users') %>
+    Account Details
+  <% end %>
 </div>
