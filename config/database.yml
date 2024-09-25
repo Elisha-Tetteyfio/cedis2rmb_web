@@ -21,6 +21,6 @@ test:
 
 production:
   <<: *default
-  database: cedis2rmb_portal_production
-  username: cedis2rmb_portal
-  password: <%= ENV["CEDIS2RMB_PORTAL_DATABASE_PASSWORD"] %>
+  database: cedis2rmb_db
+  username: <%= ENV.fetch("CEDIS2RMB_USER") %>
+  password: <%= ENV.fetch("CEDIS2RMB_PASSWORD") %>
