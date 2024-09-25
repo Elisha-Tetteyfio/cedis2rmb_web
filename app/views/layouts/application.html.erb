@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Cedis2RMB</title>
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <%= csrf_meta_tags %>
+    <%= csp_meta_tag %>
+    <%= stylesheet_link_tag "tailwind", "inter-font", "data-turbo-track": "reload" %>
+
+    <%= stylesheet_link_tag "application", "data-turbo-track": "reload" %>
+    <%= javascript_importmap_tags %>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@300..700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.3.0/font/bootstrap-icons.css">
+  </head>
+
+  <body>
+    <main class="w-[100%]">
+      <% if controller_name != "admin_accounts" &&
+        !current_page?(root_path) &
+        !current_page?(new_order_path) &
+        !current_page?(summary_orders_path) &
+        user_signed_in?
+      %>
+        <div class="w-[100%] flex">
+          <%= render "shared/side_nav" %>
+          <p class="notice"><%#= notice %></p>
+          <p class="alert"><%#= alert %></p>
+          <div class="w-[100%] ml-[20%]">
+            <%= render "shared/header" %>
+            <%= yield %>
+          </div>
+        </div>
+      <% else %>
+        <%= yield %>
+      <% end %>
+    </main>
+  </body>
+</html>

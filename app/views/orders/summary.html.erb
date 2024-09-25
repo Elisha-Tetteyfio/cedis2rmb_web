@@ -1,0 +1,52 @@
+<div class="bg-blue-light p-8 h-screen">
+  <div class="bg-white md:w-[70%] mx-auto rounded-xl p-4 shadow">
+    <!-- Order summary -->
+    <div class="flex">
+      <div class="bg-white px-2 text-bold rounded-lg w-fit h-fit border-4 border-grey-light hover:shadow-md transition-shadow">
+        <%= link_to new_order_path(@order) do %>
+          <i class="bi-arrow-left text-2xl"></i>
+        <% end %>
+      </div>
+    </div>
+    <div>
+      <div class="text-2xl text-blue-dark text-center">Order summary</div>
+      <table class="bg-grey-light bg-opacity-30 mt-4 mb-8 w-[70%] border border-grey-dark rounded mx-auto">
+        <tbody>
+          <tr>
+            <td class="p-2">Order details</td>
+            <td></td>
+          </tr>
+          <tr class="bg-white">
+            <td class="p-2">Order amount (Cedis)</td>
+            <td><%= format_amount(@order.amount)%></td>
+          </tr>
+          <tr class="bg-white">
+            <td class="p-2">Order amount (RMB)</td>
+            <td><%= format_amount(convert_to_rmb(@order.amount, @exchange_rate))%></td>
+          </tr>
+          <tr>
+            <td class="p-2">Account type</td>
+            <td><%= @order.recipient_account.account_type.name %> </td>
+          </tr>
+          <tr class="bg-white">
+            <td class="p-2">Account details</td>
+            <td><%= @order.recipient_account.account_name %> &nbsp; - &nbsp; <%= @order.recipient_account.account_number%></td>
+          </tr>
+          <tr>
+            <td class="p-2">Payment method</td>
+            <td><%= @order.payer_account.account_type.name%></td>
+          </tr>
+          <tr class="bg-white">
+            <td class="p-2">Paying account</td>
+            <td><%= @order.payer_account.account_name %> &nbsp; - &nbsp; <%= @order.payer_account.account_number%></td>
+          </tr>
+        </tbody>
+      </table>
+      <div class="w-[70%] mx-auto flex justify-end">
+        <%= form_with url: confirm_orders_path, method: :post do %>
+          <%= submit_tag "Confirm Order", class: "bg-blue text-white font-semibold px-4 py-2 rounded-md mt-2" %>
+        <% end %>
+      </div>
+    </div>
+  </div>
+</div>

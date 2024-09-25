@@ -1,0 +1,7 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+.active-link {
+  @apply bg-blue-light rounded text-blue
+} 

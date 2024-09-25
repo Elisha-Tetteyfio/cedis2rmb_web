@@ -1,0 +1,65 @@
+<div class="w-[70%] bg-white m-auto my-16 rounded-xl flex justify-between p-8">
+  <% if @user.errors.any? %>
+    <div class="alert alert-danger">
+      <ul>
+        <% @user.errors.full_messages.each do |message| %>
+          <li class="text-blue pb-2 italic"><%= message %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+  <div class="w-[55%]">
+    <div class="flex items-center mb-4 gap-x-2.5">
+      <%= image_tag 'logo_blue.svg', alt: 'logo', class: 'w-[40px]' %>
+      <p class="font-bold text-sm">Cedis2RMB</p>
+    </div>
+    <%= image_tag 'signin_img.jpg', alt: 'Sign in', class: '' %>
+  </div>
+
+  <div class="m-auto">
+    <%= form_for(resource, as: resource_name, url: '/users') do |f| %>
+      <h2 class="font-bold mb-4">Signup to Cedis2RMB</h2>
+
+      <div class="field mb-4">
+        <%= f.label :email, class: 'text-sm font-semibold' %><br />
+        <%= 
+          f.email_field :email,
+          autofocus: true, 
+          autocomplete: "email",
+          placeholder: "hello@example.com",
+          class: 'w-[100%] h-[40px] rounded-lg border-form_border placeholder:font-light'
+        %>
+      </div>
+
+      <div class="field mb-4">
+        <%= f.label :password, class: 'text-sm font-semibold' %><br />
+        <%= 
+          f.password_field :password,
+          autocomplete: "current-password",
+          placeholder: '••••••••',
+          class: 'w-[100%] h-[40px] rounded-lg border-form_border placeholder:font-light' 
+        %>
+        <% if @minimum_password_length %>
+          <p><em><%= @minimum_password_length %> characters minimum</em></p>
+        <% end %>
+      </div>
+
+      <div class="field text-grey-dark font-semibold mb-4">
+        <p><%= f.label :password_confirmation, class: 'text-sm font-semibold' %></p>
+        <%= f.password_field :password_confirmation,
+          class: "w-[100%] h-[40px] rounded-lg border-form_border placeholder:font-light"
+        %>
+      </div>
+
+      <div class="actions">
+        <%= 
+          f.submit "Sign up",
+          class: "w-[100%] h-[40px] bg-blue mt-2 rounded-lg  text-white "
+        %>
+      </div>
+    <% end %>
+
+    <%= render "users/shared/links" %>
+  </div>
+</div>      
+      

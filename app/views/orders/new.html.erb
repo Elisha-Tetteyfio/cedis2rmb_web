@@ -1,0 +1,232 @@
+<div class="bg-blue-light p-2 min-h-screen">
+<!-- <div class="bg-blue-light p-6  flex justify-center items-center"> -->
+  <div class="lg:w-[70%] max-w-4xl mx-auto my-4 p-4 rounded-xl bg-white shadow-lg">
+    <!-- Header Section -->
+    <div class="flex items-center gap-x-6 mb-6">
+      <div class=" bg-white px-2 text-bold rounded-lg w-fit h-fit border-4 border-grey-light hover:shadow-md transition-shadow">
+        <%= link_to root_path do %>
+          <i class="bi-arrow-left text-2xl"></i>
+        <% end %>
+      </div>
+      <h1 class="font-bold text-3xl text-blue-dark">New order</h1>
+    </div>
+
+    <hr class="mb-2 md:mb-8 border-grey-dark">
+
+    <%#= link_to "Back to orders", orders_path, class: "ml-2 rounded-lg py-3 px-5 bg-gray-100 inline-block font-medium" %>
+
+    <div class="space-y-8 text-grey-dark">
+      <%= form_with(model: @order, class: "contents", id: "currencyform") do |form| %>
+        <div class="md:flex md:justify-between md:flex-row-reverse mb-8">
+          
+          <!--Display rate -->
+          <div class="flex items-center justify-between md:justify-center space-x-2 my-2">
+            <span class="font-semibold">Rate:</span>
+            <p class="text-xl text-blue-dark font-bold bg-grey-light bg-opacity-30 text-center py-1 px-3 rounded-lg border border-grey-light">
+              <%= @exchange_rate %>
+            </p>
+          </div>
+
+          <!-- Currency conversion -->
+          <div>
+            <h3 class="block text-base font-semibold">Select Currency</h3>
+            <div class="flex gap-x-8">
+              <label class="flex items-center space-x-1">
+                <%= radio_button_tag :currency, "cedi", true, class:"mr-2" %>
+                Cedis ₵
+              </label>
+              <label class="flex items-center space-x-1">
+                <%= radio_button_tag :currency, "rmb", false, class:"mr-2" %>
+                RMB ¥
+              </label>
+            </div>
+          </div>
+        </div>
+
+        <div class="gap-x-4 items-end justify-between space-y-2">
+          <div class="flex-1">
+            <label class="block text-base font-semibold">Enter Amount</label>
+            <%= form.number_field :temp_amount, id: "temp_amount", value: @order.amount, placeholder: "e.g. 100", required: true, 
+              class: "w-full rounded-md border border-grey-light outline-none px-3 py-2 mt-2 h-[40px] placeholder:font-light placeholder:italic",
+              name: nil, step: ".01", min: @limit.min_value, max: @limit.max_value %>
+          </div>
+
+          <diV class="flex items-end gap-x-2">
+            <button type="button" id="convert-btn"
+              class="bg-blue-light text-blue-dark px-4 font-medium border border-blue-light rounded-md h-[40px]">
+              Convert to RMB
+            </button>
+
+            <!-- Display the Conversion Result -->
+            <div class="flex items-center text-center py-1 px-3 h-[40px] bg-grey-light bg-opacity-30 rounded-md border border-grey-light">
+              <p id="result" class="font-semibold font-lg text-grey-dark">0.00</p>
+            </div>
+          </div>
+        </div>
+
+        <div>
+          <%= form.hidden_field :amount, id: "amount", class: "hidden" %>
+        </div>
+
+        <hr class="text-grey-dark my-8"/>
+
+        <!-- Recipient account -->
+        <%= form.fields_for :recipient_account do |recipient_form| %>
+          <div>
+            <h1 class="text-blue-dark text-3xl font-bold">Account details</h1>
+            <div class="text-sm text-grey-dark">(The account you want us to credit. Upload the QR code or else enter the account details. You don't have to do both.)</div>
+            <hr class="text-grey-light mb-8"/>
+
+            <!-- Account code-->
+            <div>
+              <label class="block text-base font-semibold">Upload account QR code</label>
+              <%= recipient_form.file_field :qr_code %>
+            </div>
+
+            <!-- Alternative -->
+            <div class="text-2xl font-semibold text-blue-dark my-4"> OR </div>
+
+            <!-- Account type, name & number-->
+            <div class="flex-1 mb-6">
+              <label class="block text-base font-semibold">Account Type</label>
+              <%= recipient_form.select :account_type_id,
+                options_from_collection_for_select(@recipient_account_types || [], :id, :name, @recipient_account[:account_type_id]),
+                {},
+                {class: "w-full md:w-[50%] block rounded-md border border-grey-light outline-none"}
+              %>
+            </div>
+            <div class="flex-1 mb-6">
+              <label class="block text-base font-semibold">Account Name</label>
+              <%= recipient_form.text_field :account_name, value: @recipient_account.account_name, placeholder: "e.g. Jane Doe", 
+                class: "w-full md:w-[50%] rounded-md border border-grey-light outline-none px-3 py-2 mt-2 h-[40px] placeholder:font-light placeholder:italic" %>
+            </div>
+            <div class="flex-1">
+              <label class="block text-base font-semibold">Account Number</label>
+              <%= recipient_form.text_field :account_number, value: @recipient_account.account_number, placeholder: "e.g. 0011223344556677", 
+                class: "w-full md:w-[50%] rounded-md border border-grey-light outline-none px-3 py-2 mt-2 h-[40px] placeholder:font-light placeholder:italic" %>
+            </div>
+          </div>
+        <% end %>
+
+        <hr class="text-grey-dark my-8"/>
+
+        <!-- Payer's account -->
+        <%= form.fields_for :payer_account do |payer_form| %>
+          <div>
+            <h1 class="text-blue-dark text-3xl font-bold">Payment details</h1>
+            <div class="text-sm text-grey-dark">(The account you would be making payment from.)</div>
+            <hr class="text-grey-light mb-8"/>
+
+            <!-- Account name & number-->
+            <div class="flex-1 mb-6">
+              <label class="block text-base font-semibold">Account Type</label>
+              <%= payer_form.select :account_type_id,
+                options_from_collection_for_select(@payer_account_types || [], :id, :name, @payer_account[:account_type_id]),
+                {},
+                {class: "w-full md:w-[50%] block rounded-md border border-grey-light outline-none"}
+              %>
+            </div>
+            <div class="flex-1 mb-6">
+              <label class="block text-base font-semibold">Account Name</label>
+              <%= payer_form.text_field :account_name, value: @payer_account.account_name, placeholder: "e.g. John Doe", 
+                class: "w-full md:w-[50%] rounded-md border border-grey-light outline-none px-3 py-2 mt-2 h-[40px] placeholder:font-light placeholder:italic" %>
+            </div>
+            <div class="flex-1">
+              <label class="block text-base font-semibold">Account Number</label>
+              <%= payer_form.text_field :account_number, value: @payer_account.account_number, placeholder: "e.g. 0011223344556677", 
+                class: "w-full md:w-[50%] rounded-md border border-grey-light outline-none px-3 py-2 mt-2 h-[40px] placeholder:font-light placeholder:italic" %>
+            </div>
+          </div>
+        <% end %>
+
+        <hr class="text-grey-dark my-8"/>
+
+        <!-- Contact info -->
+        <div>
+          <h1 class="text-blue-dark text-3xl font-bold">Contact Info</h1>
+          <div class="text-sm text-grey-dark">(Enter number for receipt confirmation.)</div>
+          <hr class="text-grey-light mb-8"/>
+
+          <div class="flex-1">
+            <label class="block text-base font-semibold">WhatsApp Number</label>
+            <%= form.text_field :whatsapp_number, value: @order.whatsapp_number, placeholder: "e.g. +233123456789", 
+              class: "w-full md:w-[50%] rounded-md border border-grey-light outline-none px-3 py-2 mt-2 h-[40px] placeholder:font-thin placeholder:italic" %>
+          </div>
+
+          <div class="flex-1 mt-6">
+            <label class="block text-base font-semibold">Reference</label>
+            <%= form.text_area :reference, value: @order.reference, placeholder: "Reference you want us to use", 
+              class: "w-full md:w-[50%] h-[100px] resize-none rounded-md border border-grey-light outline-none px-3 py-2 mt-2 h-[40px] placeholder:font-thin placeholder:italic" %>
+          </div>
+        </div>
+
+        <div class="text-right">
+          <%= form.submit "Review Order",
+            id: "submit-btn",
+            class: "bg-blue-dark text-white font-bold rounded-lg py-2 px-4 mt-8 cursor-pointer hover:bg-grey-dark hover:text-blue-dark transition"
+          %>
+        </div>
+      <% end %>
+    </div>
+
+  </div>
+</div>
+
+
+<script>
+  document.addEventListener("turbo:load", function() {
+    const amountInput = document.getElementById("temp_amount");
+    const convertBtn = document.getElementById("convert-btn");
+    const result = document.getElementById("result");
+    const hiddenAmountField = document.getElementById("amount");
+    const currencyForm = document.getElementById('currencyform');
+    const submitButton = document.getElementById('submit-btn');
+    var exchangeRate = <%= @exchange_rate %>;
+
+    // Display converted amount
+    convertBtn.addEventListener("click", function() {
+      const selectedCurrency = document.querySelector('input[name="currency"]:checked').value;
+      const amount = parseFloat(amountInput.value);
+    
+      if (isNaN(amount)) {
+        result.textContent = "Invalid amount.";
+        return;
+      }
+
+      let convertedAmount;
+      
+      if (selectedCurrency === "cedi") {
+        convertedAmount = (amount * exchangeRate).toFixed(2);
+        result.textContent = `¥ ${convertedAmount}`;
+      } else if (selectedCurrency === "rmb") {
+        convertedAmount = (amount / exchangeRate).toFixed(2);
+        result.textContent = `₵ ${convertedAmount}`;
+      }
+    });
+
+    //Update amount field
+    submitButton.addEventListener("click", function() {
+      const selectedCurrency = document.querySelector('input[name="currency"]:checked').value;
+      const amount = parseFloat(amountInput.value);
+    
+      if (isNaN(amount)) {
+        result.textContent = "0";
+        return;
+      }
+
+      let convertedAmount;
+      if (selectedCurrency === "cedi") {
+        hiddenAmountField.value = amount.toFixed(2); //Set amount
+      } else if (selectedCurrency === "rmb") {
+        hiddenAmountField.value = (amount / exchangeRate).toFixed(2); //Set amount
+      }
+    })
+    
+    currencyForm.addEventListener('change', function(event) {
+      if (event.target.name === 'currency') {
+        const convertButton = document.getElementById('convert-btn');
+        convertButton.textContent = event.target.value === 'cedi' ? "Convert to RMB" : "Convert to Cedis";
+      }
+    });
+  });
+</script>

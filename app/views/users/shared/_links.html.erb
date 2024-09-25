@@ -1,0 +1,12 @@
+<%- if controller_name != 'sessions' %>
+  <div class="mt-2">
+    Already have an account?
+    <%= link_to "Log in", new_session_path(resource_name), class: "text-blue" %>
+    instead
+  </div>
+<% else %>
+  <div class="mt-2">
+    New here?
+    <%= link_to "Create account", new_user_registration_path, class: "text-blue" %><br />
+  </div>
+<% end %>

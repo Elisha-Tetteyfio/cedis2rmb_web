@@ -1,0 +1,60 @@
+<div class="bg-blue-light p-8">
+  <div class="bg-white w-[70%] mx-auto rounded-xl p-4 shadow">
+    <!-- Order summary -->
+    <div class="flex justify-between mb-4">
+      <div class="text-3xl font-semibold text-grey-dark">
+        Order ID: #<%= @order.order_code %> 
+      </div>
+      <div class="bg-white px-2 text-bold rounded-lg w-fit h-fit border-4 border-grey-light hover:shadow-md transition-shadow">
+        <% if current_user %>
+          <%= link_to dashboard_path do %>
+            <i class="bi-x text-2xl"></i>
+          <% end %>
+        <% else %>
+          <%= link_to root_path do %>
+            <i class="bi-x text-2xl"></i>
+          <% end %>
+        <% end %>
+      </div>
+    </div>
+    <hr class="mb-6">
+    <div class="text-xl text-blue-dark">
+      Please make your payment of <span class="text-2xl font-bold">GHS <%= @order.amount %></span> to 
+      any of the accounts below,
+      use <span class="text-2xl font-bold"><%= @order.order_code %></span> as reference,
+      and we'll get back to you in less than 10 mins.
+    </div>
+    <div class="mt-4"> <!--md:grid md:grid-cols-2-->
+      <% @admin_accounts.each_with_index do |account, index| %>
+        <div class="my-4 font-medium text-blue-dark text-lg">
+          <div class="text-blue-dark text-2xl font-semibold"> <%= index+1 %>. <%= account.account_type.name %> </div>
+          <div class="ml-4"> <%= account.account_number %> </div>
+          <div class="ml-4"> <%= account.account_name %> </div>
+        </div>
+      <% end %>
+    </div>
+    <div>
+      <div class="text-2xl text-blue-dark text-center">Order summary</div>
+      <table class="bg-grey-light bg-opacity-30 mt-4 mb-8 w-[100%] md:w-[70%] border border-grey-dark rounded mx-auto">
+        <tbody>
+          <tr>
+            <td class="p-2">Order amount (Cedis)</td>
+            <td><%= @order.amount%></td>
+          </tr>
+          <tr class="bg-white">
+            <td class="p-2">Order amount (RMB)</td>
+            <td><%= convert_to_rmb(@order.amount, @order.rate)%></td>
+          </tr>
+          <tr>
+            <td class="p-2">Date</td>
+            <td><%= @order.created_at%></td>
+          </tr>
+          <tr class="bg-white">
+            <td class="p-2">Payment method</td>
+            <td><%= @order.payer_account.account_type.name%></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>

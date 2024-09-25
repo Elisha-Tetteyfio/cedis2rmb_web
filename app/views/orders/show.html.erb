@@ -1,0 +1,72 @@
+<div class="w-full p-2 bg-blue-light">
+  <%= render 'header' %>
+
+  <div class="bg-white rounded my-4 px-2 ">
+
+    <div class="py-4 border-b-2 m-2 border-grey-light w-[50%] flex justify-between items-center">
+      <div class="flex gap-x-4 items-center">
+        <div class="w-[80px] h-[80px] rounded-full bg-blue bg-opacity-10 text-blue flex justify-center items-center">
+          <%= @order.user.username_initials %>
+        </div>
+        <div>
+          <div class="text-lg"><%= @order.user.nil? ? "Guest User" : @order.user&.username %></div>
+          <div class="text-grey-dark text-xs">GHS <%= format_amount(@order.amount) %></div>
+          <div class="text-xs <%= order_status_color(@order.status) %>"><%= @order.status %></div>
+        </div>
+      </div>
+      <div>
+        <% if @order.status == "Pending" %>
+          <%= form_with(model: @order, url: order_path(@order), method: :patch) do |form| %>
+            <div>
+              <%= form.select :status,
+                options_for_select(Order.status_options, @order.status),
+                {},
+                class: "rounded border-blue",
+                onchange: "this.form.submit()"
+              %>
+            </div>
+          <% end %>
+        <% else %>
+          <div class="<%=order_status_bg_dark(@order.status)%> text-white font-semibold rounded p-2 px-4">
+            <%= @order.status %>
+          </div>
+        <% end %>
+      </div>
+    </div>
+
+    <div class="text-grey-dark font-medium mt-4">
+      <div class="mb-4">
+        <div>Date</div>
+        <div class="w-[40%] px-4 py-2 border border-grey-light"> <%= format_date(@order.created_at) %> </div>
+      </div>
+      <div class="mb-4">
+        <div>Reference</div>
+        <div class="w-[40%] px-4 py-2 border border-grey-light"> <%= @order.reference %> </div>
+      </div>
+      <div class="mb-4">
+        <div>Rate</div>
+        <div class="w-[40%] px-4 py-2 border border-grey-light"> <%= format_amount(@order.rate) %> </div>
+      </div>
+      <div class="mb-4">
+        <div>Account name</div>
+        <div class="w-[40%] px-4 py-2 border border-slate_medium text-font_grey"> 
+          <%= @order.recipient_account.account_name %>
+        </div>
+      </div>
+      <div class="mb-4">
+        <div>Account number</div>
+        <div class="w-[40%] px-4 py-2 border border-slate_medium text-font_grey"> 
+          <%= @order.recipient_account.account_number %>
+        </div>
+      </div>
+      <% if @order.recipient_account.qr_code.attached? %>
+        <div class="mb-4">
+          <div>QR code</div>
+          <div class="w-[40%] px-4 py-2 border border-slate_medium text-font_grey">
+            <%= image_tag url_for(@order.recipient_account.qr_code), alt: 'QR Code' %>
+          </div>
+        </div>
+      <% end %>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,45 @@
+<div class="w-full p-2 bg-blue-light">
+  <%= render 'header' %>
+
+  <div class="bg-white rounded-b-lg">
+    <div class="p-4">
+      <table class="w-full text-sm ">
+        <thead>
+          <tr class="text-left bg-grey-light bg-opacity-50 border-b-2 border-t border-grey-light">
+            <th class="p-2">S/N</th>
+            <th class="p-2">Order Code</th>
+            <th class="p-2">Amount(GHS)</th>
+            <th class="p-2">Rate</th>
+            <th class="p-2">Status</th>
+            <th class="p-2">Date</th>
+            <th class="p-2">Action</th>
+          </tr>
+        </thead>
+        <tbody class="bg-white">
+          <% @orders.each_with_index do |order, index| %>
+            <tr class="bg-white border-b border-grey-light border-solid py-0">
+              <!-- Calculation to get the index -->
+              <td class="p-2"><%= (index+(@page*25)-24) %></td>
+              <td class="p-2"><%= order.order_code %></td>
+              <td class="p-2"><%= format_amount(order.amount) %></td>
+              <td class="p-2"><%= format_amount(order.rate) %></td>
+              <td class="p-2">
+                <div class="rounded text-center py-0.5 <%= order_status_bg(order.status) %>"><%= order.status %></div>
+              </td>
+              <td class="p-2"><%= format_date(order.created_at)%></td>
+              <td class="p-2">
+                <%= link_to "View Details", order, class: "bg-blue rounded p-1 text-white" %>
+              </td>
+            </tr>
+          <% end %>
+        </tbody>
+      </table>
+      <div class="custom-pagination mt-4">
+        <%= will_paginate @orders,
+          inner_window: 2,
+          outer_window: 0
+        %>
+      </div>
+    </div>
+  </div>
+</div>
