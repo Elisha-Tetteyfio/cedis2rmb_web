@@ -2,12 +2,12 @@
   <%= render 'header' %>
 
   <!--Top segment-->
-  <div class="p-16 md:p-32 lg:p-48 md:pt-48 flex justify-between text-grey-dark items-center">
-    <div class="text-3xl w-[80%] md:w-[40%]">
+  <div class="p-8 md:p-8 lg:p-32 xl:p-48 md:pt-48 flex justify-between text-grey-dark items-center">
+    <div class="text-2xl md:text-3xl w-[100%] md:w-[40%]">
       <div>
-        Provide funding for any <span class="text-blue text-4xl font-semibold">Alipay</span>,
-        <span class="text-blue text-4xl font-semibold">WeChat</span>, and bank account quickly and efficiently,
-        ensuring prompt processing and <span class="text-blue text-4xl font-semibold">Secure</span> transactions.
+        Provide funding for any <span class="text-blue text-3xl md:text-4xl font-semibold">Alipay</span>,
+        <span class="text-blue text-3xl md:text-4xl font-semibold">WeChat</span>, and bank account quickly and efficiently,
+        ensuring prompt processing and <span class="text-blue text-3xl md:text-4xl font-semibold">Secure</span> transactions.
       </div>
       <div class="bg-blue text-white px-4 py-2 rounded text-base w-fit mt-8">
         <%= link_to "Login/Register", new_user_session_path %>
@@ -16,7 +16,8 @@
         <%= link_to "BU¥", new_order_path, class: "bg-blue p-2 px-4 rounded text-white" %>
       </div>
     </div>
-    <div class="w-[400px] h-[400px] rounded-full bg-grey-light hidden md:block">
+    <div class="w-[400px] h-[400px] rounded-full hidden md:block">
+      <%= image_tag 'im1.jpg', alt: 'im', class: 'w-inherit rounded-full h-inherit' %>
     </div>
   </div>
 
@@ -31,28 +32,28 @@
 
     <!-- Services -->
     <div class="overflow-x-scroll mt-16 flex justify-around px-4 gap-x-4">
-      <div class="bg-white p-8 shadow text-center w-[45%] md:w-[35%] lg:w-[20%] flex-none rounded-b-lg border-b-4 border-blue">
+      <div class="bg-white p-8 shadow text-center w-[90%] md:w-[35%] lg:w-[28%] xl:w-[20%] flex-none rounded-b-lg border-b-4 border-blue">
         <div class="w-[30%] rounded-full bg-blue p-4 text-white my-8 mx-auto">R</div>
         <div class="font-bold text-xl my-8">Payments</div>
         <div class="text-xl font-light">
           Make direct payments in your preferred currency (Cedis/RMB) to both international and local systems.
         </div>
       </div>
-      <div class="bg-white p-8 shadow text-center w-[45%] md:w-[35%] lg:w-[20%] flex-none rounded-b-lg border-b-4 border-blue">
+      <div class="bg-white p-8 shadow text-center w-[90%] md:w-[35%] lg:w-[28%] xl:w-[20%] flex-none rounded-b-lg border-b-4 border-blue">
         <div class="w-[30%] rounded-full bg-blue p-4 text-white my-8 mx-auto">R</div>
         <div class="font-bold text-xl my-8">E-cash</div>
         <div class="text-xl font-light">
           Receive direct electronic payments in either Cedis or RMB with no hassle.
         </div>
       </div>
-      <div class="bg-white p-8 shadow text-center w-[45%] md:w-[35%] lg:w-[20%] flex-none rounded-b-lg border-b-4 border-blue">
+      <div class="bg-white p-8 shadow text-center w-[90%] md:w-[35%] lg:w-[28%] xl:w-[20%] flex-none rounded-b-lg border-b-4 border-blue">
         <div class="w-[30%] rounded-full bg-blue p-4 text-white my-8 mx-auto">R</div>
         <div class="font-bold text-xl my-8">Currency Buying for Profit</div>
         <div class="text-xl font-light">
           Capitalize on market movements and buy Cedis/RMB to profit when the other weakens.
         </div>
       </div>
-      <div class="bg-white p-8 shadow text-center w-[45%] md:w-[35%] lg:w-[20%] flex-none rounded-b-lg border-b-4 border-blue">
+      <div class="bg-white p-8 shadow text-center w-[90%] md:w-[35%] lg:w-[28%] xl:w-[20%] flex-none rounded-b-lg border-b-4 border-blue">
         <div class="w-[30%] rounded-full bg-blue p-4 text-white my-8 mx-auto">R</div>
         <div class="font-bold text-xl my-8">Access funds 24/7</div>
         <div class="text-xl font-light">
@@ -63,20 +64,21 @@
   </div>
 
   <!-- Steps segment -->
-  <div class="w-[100%] lg:w-[60%] lg:mx-auto pt-4 pb-16" id="steps">
+  <div class="w-[100%] md:w-[90%] lg:w-[80%] xl:w-[60%] md:mx-auto pt-4 pb-16" id="steps">
     <div class="flex justify-center items-center gap-x-2.5 mt-4 pt-8">
       <hr class="border-blue-dark border-1/2 w-[3%]">
       <div class="text-center text-sm font-semibold text-blue-dark">trust the process</div>
       <hr class="border-blue-dark border-1/2 w-[3%]">
     </div>
-    <div class="text-4xl text-center font-bold text-blue-dark mb-16">Our Approach</div>
+    <div class="text-4xl text-center font-bold text-blue-dark mb-8 md:mb-16">Our Approach</div>
 
     <!-- Steps -->
     <div class="px-4 flex flex-col md:flex-row justify-between text-grey-dark items-center mb-8">
       <div class="w-[full] md:[300px] h-[300px] flex-none rounded bg-grey-light">
+        <%= image_tag 'step1.jpg', alt: 'Sign in', class: 'w-[300px] h-[300px] rounded' %>
       </div>
       <div class="text-xl md:w-[40%] flex-none">
-        <div class="text-2xl text-left font-bold text-blue-dark mb-4">
+        <div class="text-2xl text-left font-bold text-blue-dark mb-2 md:mb-4">
           Select currency
         </div>
         <div>
@@ -86,9 +88,10 @@
     </div>
     <div class="px-4 flex flex-col md:flex-row-reverse justify-between text-grey-dark items-center mb-8">
       <div class="w-[full] md:[300px] h-[300px] flex-none rounded bg-grey-light">
+        <%= image_tag 'step2.jpg', alt: 'Sign in', class: 'w-[300px] h-[300px] rounded' %>
       </div>
       <div class="text-xl md:w-[40%] flex-none">
-        <div class="text-2xl text-left font-bold text-blue-dark mb-4">
+        <div class="text-2xl text-left font-bold text-blue-dark mb-2 md:mb-4">
           Enter amount
         </div>
         <div>
@@ -99,9 +102,10 @@
     </div>
     <div class="px-4 flex flex-col md:flex-row justify-between text-grey-dark items-center mb-8">
       <div class="w-[full] md:[300px] h-[300px] flex-none rounded bg-grey-light">
+        <%= image_tag 'step3.jpg', alt: 'Sign in', class: 'w-[300px] h-[300px] rounded' %>
       </div>
       <div class="text-xl md:w-[40%] flex-none">
-        <div class="text-2xl text-left font-bold text-blue-dark mb-4">
+        <div class="text-2xl text-left font-bold text-blue-dark mb-2 md:mb-4">
           Enter account for payment
         </div>
         <div>
@@ -112,9 +116,10 @@
     </div>
     <div class="px-4 flex flex-col md:flex-row-reverse justify-between text-grey-dark items-center mb-8">
       <div class="w-[full] md:[300px] h-[300px] flex-none rounded bg-grey-light">
+        <%= image_tag 'step4.jpg', alt: 'Sign in', class: 'w-[300px] h-[300px] rounded' %>
       </div>
       <div class="text-xl md:w-[40%] flex-none">
-        <div class="text-2xl text-left font-bold text-blue-dark mb-4">
+        <div class="text-2xl text-left font-bold text-blue-dark mb-2 md:mb-4">
           Confirm and pay
         </div>
         <div>
@@ -123,7 +128,6 @@
         </div>
       </div>
     </div>
-
   </div>
 
   <!-- Footer -->
@@ -145,7 +149,7 @@
             </summary>
             <div class="text-sm font-light mt-4">
               We understand that online transactions can raise concerns.
-              At Buy-rmb.com, we use the latest security measures to keep your money safe.
+              At Cedis2RMB, we use the latest security measures to keep your money safe.
               However, if you prefer a more traditional approach, we offer alternative solutions:
             </div>
           </details>
@@ -155,7 +159,7 @@
             </summary>
             <div class="text-sm font-light mt-4">
               We understand that online transactions can raise concerns.
-              At Buy-rmb.com, we use the latest security measures to keep your money safe.
+              At Cedis2RMB, we use the latest security measures to keep your money safe.
               However, if you prefer a more traditional approach, we offer alternative solutions:
             </div>
           </details>
@@ -165,7 +169,7 @@
             </summary>
             <div class="text-sm font-light mt-4">
               We understand that online transactions can raise concerns.
-              At Buy-rmb.com, we use the latest security measures to keep your money safe.
+              At Cedis2RMB, we use the latest security measures to keep your money safe.
               However, if you prefer a more traditional approach, we offer alternative solutions:
             </div>
           </details>
@@ -177,7 +181,7 @@
             </summary>
             <div class="text-sm font-light mt-4">
               We understand that online transactions can raise concerns.
-              At Buy-rmb.com, we use the latest security measures to keep your money safe.
+              At Cedis2RMB, we use the latest security measures to keep your money safe.
               However, if you prefer a more traditional approach, we offer alternative solutions:
             </div>
           </details>
@@ -187,7 +191,7 @@
             </summary>
             <div class="text-sm font-light mt-4">
               We understand that online transactions can raise concerns.
-              At Buy-rmb.com, we use the latest security measures to keep your money safe.
+              At Cedis2RMB, we use the latest security measures to keep your money safe.
               However, if you prefer a more traditional approach, we offer alternative solutions:
             </div>
           </details>
@@ -197,7 +201,7 @@
             </summary>
             <div class="text-sm font-light mt-4">
               We understand that online transactions can raise concerns.
-              At Buy-rmb.com, we use the latest security measures to keep your money safe.
+              At Cedis2RMB, we use the latest security measures to keep your money safe.
               However, if you prefer a more traditional approach, we offer alternative solutions:
             </div>
           </details>
