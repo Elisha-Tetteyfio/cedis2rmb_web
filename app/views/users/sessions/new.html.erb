@@ -1,13 +1,13 @@
-<div class="w-[70%] bg-white m-auto my-16 rounded-xl flex justify-between p-8">
+<div class="w-[90%] md:w-[70%] lg:w-[80%] bg-white m-auto my-16 rounded-xl lg:flex justify-between p-8">
   <div class="w-[55%]">
     <div class="flex items-center mb-4 gap-x-2.5">
       <%= image_tag 'logo_blue.svg', alt: 'logo', class: 'w-[40px]' %>
       <p class="font-bold text-sm">Cedis2RMB</p>
     </div>
-    <%= image_tag 'signin_img.jpg', alt: 'Sign in', class: '' %>
+    <%= image_tag 'signin_img.jpg', alt: 'Sign in', class: 'hidden lg:block' %>
   </div>
 
-  <div class="m-auto">
+  <div class="m-auto lg:w-[40%]">
     <%= form_for(resource, as: resource_name, url: session_path(resource_name)) do |f| %>
       <h2 class="font-bold mb-4">Login to Cedis2RMB</h2>
 
