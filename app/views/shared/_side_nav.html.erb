@@ -1,9 +1,12 @@
-<div class="bg-white fixed w-[20%] h-screen flex flex-col justify-between p-4 border-r-2 border-grey-light border-solid">
+<div class="hidden md:flex bg-white fixed w-[80%] md:w-[20%] h-screen flex flex-col justify-between p-4 border-r-2 border-grey-light border-solid" id="side-nav">
   <div class="flex flex-col gap-y-3.5">
-    <div>
+    <div class="flex justify-between">
       <div class="flex items-center mb-4 gap-x-2.5">
         <%= image_tag 'logo_blue.svg', alt: 'logo', class: 'w-[40px]' %>
         <p class="font-bold text-sm">Cedis2RMB</p>
+      </div>
+      <div class="md:hidden" id="close-side-nav">
+        <i class="bi-x-square text-2xl text-blue-dark"></i>
       </div>
     </div>
     <div class="flex flex-col gap-y-1">
@@ -30,3 +33,21 @@
     %>
   </div>
 </div>
+
+<script>
+  function hideSideNav() {
+    const sideNav = document.getElementById('side-nav');
+    sideNav.classList.add('hidden');
+  }
+
+  document.addEventListener("turbo:load", function() {
+    const closeSideNav = document.getElementById('close-side-nav');
+    const sideNavLinks = document.querySelectorAll('#side-nav a');
+
+    closeSideNav.addEventListener("click", hideSideNav);
+
+    sideNavLinks.forEach(link => {
+      link.addEventListener('click', hideSideNav);
+    });
+  })
+</script>

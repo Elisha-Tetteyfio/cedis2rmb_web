@@ -1,9 +1,28 @@
-<div class="h-[50px] w-[100%] bg-white flex items-center font-bold p-4">
-  <% if current_page?(dashboard_path) %>
-    Dashboard
-  <% elsif controller_name=='orders' %>
-    Orders
-  <% elsif current_namespace?('users') %>
-    Account Details
-  <% end %>
+<div class="flex bg-blue md:bg-white text-white md:text-grey-dark">
+  <div class="md:hidden h-[50px] p-4 flex items-center" id="side-nav-icon">
+    <i class="bi-list"></i>
+  </div>
+  <div class="h-[50px] w-[100%] flex items-center font-bold p-4">
+    <% if current_page?(dashboard_path) %>
+      Dashboard
+    <% elsif controller_name=='orders' %>
+      Orders
+    <% elsif current_namespace?('users') %>
+      Account Details
+    <% end %>
+  </div>
 </div>
+
+
+<script>
+  function showSideNav() {
+    const sideNav = document.getElementById('side-nav');
+    sideNav.classList.toggle('hidden');
+  }
+
+  document.addEventListener("turbo:load", function() {
+    const sideNavIcon = document.getElementById('side-nav-icon');
+
+    sideNavIcon.addEventListener("click", showSideNav);
+  })
+</script>
