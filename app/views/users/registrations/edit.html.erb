@@ -20,14 +20,14 @@
           <%= f.email_field :email,
             autofocus: true,
             autocomplete: "email",
-            class: "rounded-lg w-[40%]"
+            class: "rounded-lg w-[80%] md:w-[60%] lg:w-[40%]"
           %>
         </p>
       </div>
 
       <div class="field text-grey-dark font-semibold mb-4">
         <p><%= f.label :username %></p>
-        <p><%= f.text_field :username, class: "rounded-lg w-[40%]" %></p>
+        <p><%= f.text_field :username, class: "rounded-lg w-[80%] md:w-[60%] lg:w-[40%]" %></p>
       </div>
 
       <div class="text-blue-dark text-xl font-semibold mt-8">Password Details</div>
@@ -35,12 +35,12 @@
 
       <div class="field text-grey-dark font-semibold mb-4">
         <p><%= f.label :current_password %> <i>(enter current password to confirm changes)</i></p>
-        <p><%= f.password_field :current_password, class: "rounded-lg w-[40%]" %></p>
+        <p><%= f.password_field :current_password, class: "rounded-lg w-[80%] md:w-[60%] lg:w-[40%]" %></p>
       </div>
 
       <div class="field text-grey-dark font-semibold mb-4">
         <p><%= f.label :password %> <i>(leave blank if you don't want to change it)</i></p>
-        <p><%= f.password_field :password, class: "rounded-lg w-[40%]" %></p>
+        <p><%= f.password_field :password, class: "rounded-lg w-[80%] md:w-[60%] lg:w-[40%]" %></p>
         <% if @minimum_password_length %>
           <p><em><%= @minimum_password_length %> characters minimum</em></p>
         <% end %>
@@ -48,7 +48,7 @@
 
       <div class="field text-grey-dark font-semibold mb-4">
         <p><%= f.label :password_confirmation %></p>
-        <p><%= f.password_field :password_confirmation, class: "rounded-lg w-[40%]" %></p>
+        <p><%= f.password_field :password_confirmation, class: "rounded-lg w-[80%] md:w-[60%] lg:w-[40%]" %></p>
       </div>
 
       <div class="actions">
