@@ -51,6 +51,8 @@ gem 'will_paginate'
 
 gem "devise"
 
+gem 'google-cloud-firestore'
+
 # Use Sass to process CSS
 # gem "sassc-rails"
 
