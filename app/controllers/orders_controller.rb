@@ -1,6 +1,7 @@
 class OrdersController < ApplicationController
   before_action :set_order, only: %i[ show edit update ]
   before_action :authenticate_user!, only: %i[index update edit show]
+  before_action :initialize_firestore, only: %i[ create show]
 
   rescue_from ActiveRecord::RecordNotFound, with: :order_not_found
 
@@ -42,7 +43,7 @@ class OrdersController < ApplicationController
   end
 
   # POST /orders or /orders.json
-  def create
+  def create1
     uploaded_image = order_params["recipient_account_attributes"]["qr_code"]
 
     if uploaded_image.present?
@@ -65,6 +66,30 @@ class OrdersController < ApplicationController
     session[:order_params] = ActionController::Parameters.new(params_hash)
 
     redirect_to summary_orders_path
+  end
+
+  def create
+    uploaded_image = order_params["recipient_account_attributes"]["qr_code"]
+
+    # Upload to Firebase Storage
+    bucket = FIREBASE_STORAGE.bucket(BUCKET_NAME)
+    file = bucket.create_file(uploaded_image.tempfile, uploaded_image.original_filename)
+
+    # Store file URL or ID in PostgreSQL
+    # Image.create(url: file.public_url) # or store file.name for the ID
+    puts "11111111111111111111111111111111111111111111111111111111"
+    puts file.public_url
+    puts "22222222222222222222222222222222222222222222222222222222222222222222"
+
+    params_hash = order_params.to_h
+
+    # Remove qr_code from recipient_account_attributes
+    params_hash['recipient_account_attributes'].delete('qr_code')
+
+    # Convert hash back to ActionController::Parameters and store in session
+    session[:order_params] = ActionController::Parameters.new(params_hash)
+
+    redirect_to summary_orders_path, notice: "Image uploaded successfully!"
   end
 
   # GET /orders/summary
@@ -141,5 +166,9 @@ class OrdersController < ApplicationController
 
     def order_not_found
       render 'homepage/index', status: 404
+    end
+
+    def initialize_firestore
+      @firestore = $firestore
     end
 end
