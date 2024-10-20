@@ -80,7 +80,7 @@
             <!-- Account code-->
             <div>
               <label class="block text-base font-semibold">Upload account QR code</label>
-              <%= recipient_form.file_field :qr_code %>
+              <%= recipient_form.file_field :qr_code, accept: "image/jpeg, image/jpg, image/png" %>
             </div>
 
             <!-- Alternative -->

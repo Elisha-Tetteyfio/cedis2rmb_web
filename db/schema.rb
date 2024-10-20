@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2024_09_16_075905) do
+ActiveRecord::Schema[7.0].define(version: 2024_10_19_202513) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -111,6 +111,7 @@ ActiveRecord::Schema[7.0].define(version: 2024_09_16_075905) do
     t.string "account_number"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.string "qr_code_url"
     t.index ["account_type_id"], name: "index_recipient_accounts_on_account_type_id"
     t.index ["user_id"], name: "index_recipient_accounts_on_user_id"
   end
