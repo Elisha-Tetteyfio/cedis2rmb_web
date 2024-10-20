@@ -35,3 +35,4 @@
 
 # Ignore application configuration
 /config/application.yml
+/config/cedis2rmb-1ccb40dc84cb.json

@@ -44,19 +44,21 @@ class OrdersController < ApplicationController
   # POST /orders or /orders.json
   def create
     uploaded_image = order_params["recipient_account_attributes"]["qr_code"]
+    bucket = FIREBASE_STORAGE.bucket(BUCKET_NAME)
 
-    if uploaded_image.present?
-      blob = ActiveStorage::Blob.create_and_upload!(
-        io: uploaded_image.tempfile,
-        filename: uploaded_image.original_filename,
-        content_type: uploaded_image.content_type
-      )
+    # Get file extension
+    original_filename = uploaded_image.original_filename
+    file_extension = File.extname(original_filename)
 
-      # Store the blob id in the session
-      session["uploaded_image_blob_id"] = blob.id
-    end
-    # session[:order_params] = order_params
+    # Give file random uuid name and extension
+    temp_image_name = "#{SecureRandom.uuid}#{file_extension}"
+    file = bucket.create_file(uploaded_image.tempfile, temp_image_name)
+
     params_hash = order_params.to_h
+
+    # Build qr_link
+    image_url = "https://firebasestorage.googleapis.com/v0/b/#{bucket.name}/o/#{CGI.escape(temp_image_name)}?alt=media"
+    params_hash['recipient_account_attributes']['qr_code_url'] = image_url
 
     # Remove qr_code from recipient_account_attributes
     params_hash['recipient_account_attributes'].delete('qr_code')
@@ -82,12 +84,6 @@ class OrdersController < ApplicationController
     @order = Order.new(order_params)
     @recipient_account = RecipientAccount.new(order_params["recipient_account_attributes"])
     @payer_account = PayerAccount.new(order_params["payer_account_attributes"])
-
-    # Set qr_image
-    if session["uploaded_image_blob_id"]
-      qr = ActiveStorage::Blob.find(session["uploaded_image_blob_id"])
-      @recipient_account.qr_code.attach(qr)
-    end
 
     set_order_properties
 

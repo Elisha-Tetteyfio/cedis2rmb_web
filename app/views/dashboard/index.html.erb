@@ -15,7 +15,7 @@
       <hr class="text-grey-light mb-8">
       <div class=" text-lg font-medium">
         Have any pending orders? Make payment to any of these accounts using the order code as reference.
-        <div class="border border-grey-light rounded-md mt-2 p-4 w-fit min-w-[50%]">
+        <div class="rounded-md mt-2 p-4 w-fit min-w-[50%]">
           <% @admin_accounts.each_with_index do |account, index| %>
             <div class="my-4 font-medium text-blue-dark">
               <div class="text-blue-dark font-medium my-[-5px]"> <%= index+1 %>. <%= account.account_type.name %> </div>
